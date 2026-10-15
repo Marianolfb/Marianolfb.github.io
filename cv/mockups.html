@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pantallas de ejemplo (datos ficticios)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Oswald:wght@500;600&display=swap">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#888;display:flex;flex-direction:column;gap:30px;padding:30px;align-items:flex-start;}
+  .scr{width:390px;height:844px;position:relative;overflow:hidden;flex:none;}
+
+  /* ===== Inspecciones (claro, azul) ===== */
+  .el{background:#e7e8ec;color:#1f2128;font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:14px;}
+  .el .mono{font-family:"IBM Plex Mono",ui-monospace,monospace;}
+  .el-head{background:#1e1d4f;color:#fff;padding:18px 16px 14px;}
+  .el-top{display:flex;align-items:center;justify-content:space-between;}
+  .el-title{font-family:"Oswald","Arial Narrow",sans-serif;font-weight:600;font-size:22px;letter-spacing:.02em;}
+  .el-mes{font-size:12.5px;color:#cfceE6;border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:4px 11px;}
+  .el-prog{margin-top:12px;font-size:12.5px;color:#cfceE6;}
+  .el-bar{height:5px;background:rgba(255,255,255,.18);border-radius:3px;margin-top:6px;overflow:hidden;}
+  .el-bar i{display:block;height:100%;width:39%;background:#e2a542;}
+  .el-chips{display:flex;gap:7px;padding:12px 16px;overflow:hidden;background:#e7e8ec;}
+  .el-chip{flex:none;font-size:12.5px;padding:6px 12px;border-radius:18px;border:1px solid #cacdd4;background:#fbfbfc;color:#5a5e68;}
+  .el-chip.on{background:#1e1d4f;border-color:#1e1d4f;color:#fff;}
+  .el-list{padding:0 16px;display:flex;flex-direction:column;gap:10px;}
+  .tag{display:flex;background:#fbfbfc;border-radius:10px;box-shadow:0 1px 2px rgba(32,40,33,.08),0 2px 8px rgba(32,40,33,.06);overflow:hidden;}
+  .tag-hole{width:22px;flex:none;background:#eef0f2;border-right:1px dashed #cacdd4;position:relative;}
+  .tag-hole::after{content:"";position:absolute;left:6px;top:50%;margin-top:-5px;width:10px;height:10px;border-radius:50%;background:#e7e8ec;box-shadow:inset 0 1px 2px rgba(0,0,0,.18);}
+  .tag-body{flex:1;padding:11px 13px 12px;}
+  .tag-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+  .tag-addr{font-weight:600;font-size:15px;}
+  .tag-addr small{font-weight:400;color:#5a5e68;font-size:12.5px;}
+  .dot{width:11px;height:11px;border-radius:50%;margin-top:4px;flex:none;}
+  .tag-meta{margin-top:3px;font-size:12px;color:#5a5e68;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .zona{background:#e8e7f3;color:#1e1d4f;border-radius:4px;padding:1px 7px;font-size:11.5px;}
+  .tag-line{margin-top:6px;font-size:12.5px;color:#5a5e68;}
+  .tag-line.warn{color:#8a5a0a;background:#fbefd9;border-radius:5px;padding:3px 8px;display:inline-block;}
+  .tag-acts{margin-top:9px;display:flex;gap:8px;align-items:center;}
+  .btn-v{font-size:13px;font-weight:600;border-radius:8px;padding:7px 13px;border:1px solid #1e1d4f;color:#1e1d4f;background:#fff;}
+  .btn-v.ok{background:#1e1d4f;color:#fff;}
+  .ic{width:30px;height:30px;border-radius:8px;border:1px solid #cacdd4;background:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#1e1d4f;}
+  .hora{margin-left:auto;font-size:12px;color:#5a5e68;}
+  .el-nav{position:absolute;left:0;right:0;bottom:0;height:64px;background:#fbfbfc;border-top:1px solid #cacdd4;display:flex;padding:7px 8px;gap:6px;}
+  .el-nav span{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11.5px;color:#5a5e68;border-radius:8px;}
+  .el-nav span.on{background:#1e1d4f;color:#fff;}
+
+  .el-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:14px 16px 6px;}
+  .st{background:#fbfbfc;border-radius:10px;padding:10px 6px;text-align:center;box-shadow:0 1px 2px rgba(32,40,33,.08);}
+  .st b{display:block;font-family:"Oswald",sans-serif;font-weight:600;font-size:24px;color:#1e1d4f;line-height:1.1;}
+  .st span{font-size:10.5px;color:#5a5e68;letter-spacing:.02em;}
+  .el-sec{padding:12px 16px 4px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#5a5e68;}
+  .tabla{margin:0 16px;background:#fbfbfc;border-radius:10px;box-shadow:0 1px 2px rgba(32,40,33,.08);overflow:hidden;}
+  .fila{display:grid;grid-template-columns:1fr 46px 46px 56px;gap:4px;padding:10px 12px;border-top:1px solid #e1e3e8;align-items:center;font-size:13px;}
+  .fila:first-child{border-top:0;}
+  .fila.h{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:#5a5e68;background:#eef0f2;}
+  .fila .n{text-align:right;font-variant-numeric:tabular-nums;}
+  .fila .c{font-weight:500;}
+  .fila .c small{display:block;font-size:11px;color:#5a5e68;font-weight:400;}
+  .prog{height:5px;border-radius:3px;background:#e1e3e8;overflow:hidden;margin-top:4px;}
+  .prog i{display:block;height:100%;background:#1e1d4f;}
+  .acc{margin:14px 16px 0;display:flex;flex-direction:column;gap:9px;}
+  .acc div{background:#1e1d4f;color:#fff;border-radius:10px;padding:12px 14px;font-size:13.5px;font-weight:500;display:flex;justify-content:space-between;}
+  .acc div.alt{background:#fbfbfc;color:#1e1d4f;border:1px solid #cacdd4;}
+
+  /* ===== Gastos (oscuro, slate) ===== */
+  .gs{background:#0f172a;color:#e2e8f0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:14px;}
+  .gs-top{display:flex;justify-content:space-between;align-items:center;padding:18px 18px 8px;}
+  .gs-top h1{font-size:19px;font-weight:600;}
+  .gs-pill{font-size:12px;color:#94a3b8;border:1px solid #334155;border-radius:20px;padding:4px 11px;}
+  .gs-nav{position:absolute;left:0;right:0;bottom:0;height:62px;background:#111c33;border-top:1px solid #1e293b;display:flex;}
+  .gs-nav span{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11.5px;color:#64748b;gap:2px;}
+  .gs-nav span.on{color:#34d399;}
+  .gs-nav span.on::before{content:"";width:22px;height:3px;background:#34d399;border-radius:2px;margin-bottom:3px;}
+
+  .monto{text-align:center;padding:16px 0 6px;}
+  .monto small{color:#64748b;font-size:12px;letter-spacing:.08em;text-transform:uppercase;}
+  .monto b{display:block;font-size:50px;font-weight:600;letter-spacing:-.02em;margin-top:4px;color:#f8fafc;}
+  .monto b i{font-style:normal;color:#64748b;font-size:34px;margin-right:6px;}
+  .gs-label{padding:12px 18px 6px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#64748b;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px;}
+  .gc{font-size:13px;padding:7px 12px;border-radius:12px;background:#1e293b;color:#cbd5e1;border:1px solid #1e293b;}
+  .gc.on{background:#064e3b;border-color:#10b981;color:#d1fae5;}
+  .seg{margin:0 18px;display:grid;grid-template-columns:1fr 1fr;background:#1e293b;border-radius:12px;padding:4px;}
+  .seg span{text-align:center;padding:9px 0;border-radius:9px;color:#94a3b8;font-size:13.5px;}
+  .seg span.on{background:#334155;color:#f8fafc;}
+  .campo{margin:0 18px;background:#1e293b;border-radius:12px;padding:12px 14px;color:#e2e8f0;}
+  .campo small{display:block;color:#64748b;font-size:11px;margin-bottom:2px;}
+  .guardar{position:absolute;left:18px;right:18px;bottom:78px;background:#10b981;color:#052e22;font-weight:600;text-align:center;padding:14px;border-radius:14px;font-size:15.5px;}
+
+  .bal{margin:6px 18px 0;background:linear-gradient(135deg,#134e4a,#0f3a36);border:1px solid #115e59;border-radius:16px;padding:16px;}
+  .bal small{color:#99f6e4;font-size:12px;}
+  .bal b{display:block;font-size:30px;margin-top:4px;color:#f0fdfa;font-weight:600;letter-spacing:-.01em;}
+  .bal p{color:#99f6e4;font-size:12.5px;margin-top:4px;}
+  .donut-wrap{display:flex;align-items:center;gap:18px;padding:16px 18px 4px;}
+  .donut{width:118px;height:118px;border-radius:50%;flex:none;position:relative;
+    background:conic-gradient(#34d399 0 34%,#60a5fa 34% 52%,#fbbf24 52% 66%,#f472b6 66% 78%,#a78bfa 78% 88%,#64748b 88% 100%);}
+  .donut::after{content:"";position:absolute;inset:24px;border-radius:50%;background:#0f172a;}
+  .leg{font-size:12.5px;display:flex;flex-direction:column;gap:5px;color:#cbd5e1;}
+  .leg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:7px;}
+  .pres{margin:6px 18px 0;display:flex;flex-direction:column;gap:11px;}
+  .pres div p{display:flex;justify-content:space-between;font-size:12.5px;color:#cbd5e1;}
+  .pres div p b{font-weight:500;color:#e2e8f0;}
+  .pb{height:7px;background:#1e293b;border-radius:4px;overflow:hidden;margin-top:5px;}
+  .pb i{display:block;height:100%;border-radius:4px;}
+  .gasto{display:flex;justify-content:space-between;padding:11px 18px;border-top:1px solid #1e293b;font-size:13.5px;}
+  .gasto small{display:block;color:#64748b;font-size:11.5px;}
+  .gasto b{font-weight:600;font-variant-numeric:tabular-nums;}
+</style>
+</head>
+<body>
+
+<!-- 1. Inspecciones: recorrido -->
+<div class="scr el" id="el-recorrido">
+  <div class="el-head">
+    <div class="el-top"><span class="el-title">Recorrido</span><span class="el-mes">Octubre 2026 ▾</span></div>
+    <div class="el-prog">12 de 31 edificios visitados<div class="el-bar"><i></i></div></div>
+  </div>
+  <div class="el-chips"><span class="el-chip on">Zona Norte</span><span class="el-chip">Zona Centro</span><span class="el-chip">Zona Oeste</span><span class="el-chip">Todos</span></div>
+  <div class="el-list">
+    <div class="tag"><div class="tag-hole"></div><div class="tag-body">
+      <div class="tag-top"><div class="tag-addr">Av. del Sol <span class="mono">1450</span> <small>— 2 ascensores</small></div><span class="dot" style="background:#1e1d4f"></span></div>
+      <div class="tag-meta"><span class="mono">Ascensores Alfa</span><span class="mono">· 4521</span><span class="zona">Norte</span></div>
+      <div class="tag-line">Visitado hoy · Equipos 1 y 2 sin novedades</div>
+      <div class="tag-acts"><span class="btn-v ok">✓ Visitado</span><span class="ic">☎</span><span class="ic">WA</span><span class="hora mono">10:42</span></div>
+    </div></div>
+    <div class="tag"><div class="tag-hole"></div><div class="tag-body">
+      <div class="tag-top"><div class="tag-addr">Mitre <span class="mono">2380</span> <small>— 1 ascensor</small></div><span class="dot" style="background:#e2a542"></span></div>
+      <div class="tag-meta"><span class="mono">Gamma Elevación</span><span class="mono">· 3187</span><span class="zona">Norte</span></div>
+      <div class="tag-line warn">⏰ Acceso complicado · coordinar con encargado</div>
+      <div class="tag-acts"><span class="btn-v">Marcar visitado</span><span class="ic">☎</span><span class="ic">WA</span></div>
+    </div></div>
+    <div class="tag"><div class="tag-hole"></div><div class="tag-body">
+      <div class="tag-top"><div class="tag-addr">Pasaje Los Aromos <span class="mono">77</span> <small>— 3 ascensores</small></div><span class="dot" style="background:#b9bdb0"></span></div>
+      <div class="tag-meta"><span class="mono">Ascensores Alfa</span><span class="mono">· 4521</span><span class="zona">Norte</span></div>
+      <div class="tag-line">Horario: 9 a 18 hs</div>
+      <div class="tag-acts"><span class="btn-v">Marcar visitado</span><span class="ic">☎</span><span class="ic">WA</span></div>
+    </div></div>
+    <div class="tag"><div class="tag-hole"></div><div class="tag-body">
+      <div class="tag-top"><div class="tag-addr">Belgrano Sur <span class="mono">960</span> <small>— 1 ascensor</small></div><span class="dot" style="background:#b9bdb0"></span></div>
+      <div class="tag-meta"><span class="mono">Beta Conservación</span><span class="mono">· 2096</span><span class="zona">Norte</span></div>
+      <div class="tag-acts"><span class="btn-v">Marcar visitado</span><span class="ic">☎</span><span class="ic">WA</span></div>
+    </div></div>
+  </div>
+  <div class="el-nav"><span class="on">Recorrido</span><span>Vistos</span><span>Altas y bajas</span><span>Liquidación</span></div>
+</div>
+
+<!-- 2. Inspecciones: liquidación -->
+<div class="scr el" id="el-liquidacion">
+  <div class="el-head">
+    <div class="el-top"><span class="el-title">Liquidación</span><span class="el-mes">Octubre 2026 ▾</span></div>
+  </div>
+  <div class="el-stats">
+    <div class="st"><b>31</b><span>EDIFICIOS</span></div>
+    <div class="st"><b>58</b><span>ASCENSORES</span></div>
+    <div class="st"><b>12</b><span>VISTOS</span></div>
+    <div class="st"><b>19</b><span>PENDIENTES</span></div>
+  </div>
+  <div class="el-sec">Por conservador</div>
+  <div class="tabla">
+    <div class="fila h"><span>Conservador</span><span class="n">Edif.</span><span class="n">Asc.</span><span class="n">Vistos</span></div>
+    <div class="fila"><span class="c">Ascensores Alfa<small class="mono">permiso 4521</small><div class="prog"><i style="width:55%"></i></div></span><span class="n">11</span><span class="n">21</span><span class="n">6</span></div>
+    <div class="fila"><span class="c">Gamma Elevación<small class="mono">permiso 3187</small><div class="prog"><i style="width:36%"></i></div></span><span class="n">9</span><span class="n">16</span><span class="n">3</span></div>
+    <div class="fila"><span class="c">Beta Conservación<small class="mono">permiso 2096</small><div class="prog"><i style="width:22%"></i></div></span><span class="n">8</span><span class="n">14</span><span class="n">2</span></div>
+    <div class="fila"><span class="c">Delta Mantenimiento<small class="mono">permiso 5310</small><div class="prog"><i style="width:14%"></i></div></span><span class="n">3</span><span class="n">7</span><span class="n">1</span></div>
+  </div>
+  <div class="acc">
+    <div><span>Descargar liquidación (Excel)</span><span>↓</span></div>
+    <div class="alt"><span>Archivo para el organismo de control (CSV)</span><span>↓</span></div>
+  </div>
+  <div class="el-nav"><span>Recorrido</span><span>Vistos</span><span>Altas y bajas</span><span class="on">Liquidación</span></div>
+</div>
+
+<!-- 3. Gastos: cargar -->
+<div class="scr gs" id="gs-cargar">
+  <div class="gs-top"><h1>Cargar gasto</h1><span class="gs-pill">Hoy ▾</span></div>
+  <div class="monto"><small>Monto</small><b><i>$</i>18.500</b></div>
+  <div class="gs-label">Categoría</div>
+  <div class="chips"><span class="gc on">🛒 Supermercado</span><span class="gc">🥦 Verdulería</span><span class="gc">🍕 Comida afuera</span><span class="gc">🚗 Auto</span><span class="gc">💡 Servicios</span><span class="gc">🐶 Mascota</span></div>
+  <div class="gs-label">Subcategoría</div>
+  <div class="chips"><span class="gc on">Almacén</span><span class="gc">Limpieza</span><span class="gc">Bebidas</span></div>
+  <div class="gs-label">Quién pagó</div>
+  <div class="seg"><span class="on">Ana</span><span>Leo</span></div>
+  <div class="gs-label">Tipo</div>
+  <div class="seg"><span class="on">Compartido</span><span>Personal</span></div>
+  <div class="gs-label">Detalle</div>
+  <div class="campo"><small>Opcional</small>Compra semanal</div>
+  <div class="guardar">Guardar gasto</div>
+  <div class="gs-nav"><span class="on">Cargar</span><span>Mes</span><span>Análisis</span></div>
+</div>
+
+<!-- 4. Gastos: mes -->
+<div class="scr gs" id="gs-mes">
+  <div class="gs-top"><h1>Octubre 2026</h1><span class="gs-pill">Conjunta ▾</span></div>
+  <div class="bal"><small>Balance del mes</small><b>Leo le debe $ 23.400 a Ana</b><p>Gasto compartido total: $ 412.800</p></div>
+  <div class="donut-wrap">
+    <div class="donut"></div>
+    <div class="leg">
+      <span><i style="background:#34d399"></i>Supermercado 34%</span>
+      <span><i style="background:#60a5fa"></i>Servicios 18%</span>
+      <span><i style="background:#fbbf24"></i>Comida afuera 14%</span>
+      <span><i style="background:#f472b6"></i>Hijos 12%</span>
+      <span><i style="background:#a78bfa"></i>Salud 10%</span>
+    </div>
+  </div>
+  <div class="gs-label">Presupuestos</div>
+  <div class="pres">
+    <div><p><span>Supermercado</span><b>$ 140.200 / $ 180.000</b></p><div class="pb"><i style="width:78%;background:#34d399"></i></div></div>
+    <div><p><span>Comida afuera</span><b>$ 57.800 / $ 60.000</b></p><div class="pb"><i style="width:96%;background:#fbbf24"></i></div></div>
+    <div><p><span>Servicios</span><b>$ 74.300 / $ 70.000</b></p><div class="pb"><i style="width:100%;background:#f87171"></i></div></div>
+  </div>
+  <div class="gs-label">Últimos gastos</div>
+  <div class="gasto"><span>Compra semanal<small>Ana · Supermercado · hoy</small></span><b>$ 18.500</b></div>
+  <div class="gasto"><span>Farmacia<small>Leo · Salud · ayer</small></span><b>$ 9.200</b></div>
+  <div class="gs-nav"><span>Cargar</span><span class="on">Mes</span><span>Análisis</span></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mariano Fernández Burnengo</title>
+<meta name="description" content="Mariano Fernández Burnengo, ingeniero electrónico. Aplicaciones web y móviles a medida para pequeños negocios de Argentina.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+<style>
+  :root{
+    --paper:#eef1f4;
+    --paper-raised:#f8fafb;
+    --ink:#1c2128;
+    --ink-soft:#4b535c;
+    --ink-faint:#7c848b;
+    --rule:#d7dde1;
+    --rule-strong:#b7c0c6;
+    --accent:#245e8c;
+    --accent-deep:#184568;
+    --amber:#a06a12;
+    --on-accent:#f5f8fa;
+    --sel:rgba(36,94,140,.18);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#12161b;
+      --paper-raised:#1a2027;
+      --ink:#e7eaed;
+      --ink-soft:#a7b0b7;
+      --ink-faint:#748089;
+      --rule:#29323b;
+      --rule-strong:#3b4650;
+      --accent:#72b7ec;
+      --accent-deep:#9acdf3;
+      --amber:#dba35c;
+      --on-accent:#0e1317;
+      --sel:rgba(114,183,236,.22);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#12161b;
+    --paper-raised:#1a2027;
+    --ink:#e7eaed;
+    --ink-soft:#a7b0b7;
+    --ink-faint:#748089;
+    --rule:#29323b;
+    --rule-strong:#3b4650;
+    --accent:#72b7ec;
+    --accent-deep:#9acdf3;
+    --amber:#dba35c;
+    --on-accent:#0e1317;
+    --sel:rgba(114,183,236,.22);
+  }
+
+  *{box-sizing:border-box;}
+  [hidden]{display:none!important;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Archivo",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:16px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--sel);}
+  a{color:inherit;}
+  h1,h2,h3,p{margin:0;}
+
+  .head{
+    font-family:"Newsreader",Georgia,"Times New Roman",serif;
+    font-optical-sizing:auto;
+    font-weight:500;
+    letter-spacing:-.01em;
+    text-wrap:balance;
+  }
+  .mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+  .eyebrow{
+    font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
+
+  /* header */
+  .site-head{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--rule);}
+  .site-head .top{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px;}
+  .subnav{display:none;border-top:1px solid var(--rule);}
+  .subnav .wrap{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-top:8px;padding-bottom:8px;}
+  .subnav .wrap::-webkit-scrollbar{display:none;}
+  .subnav a{
+    flex:none;text-decoration:none;color:var(--ink-soft);
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;
+    padding:6px 11px;border:1px solid var(--rule);border-radius:2px;
+  }
+  .subnav a[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent);}
+  .navlink[aria-current="true"]{color:var(--accent);}
+  @media (max-width:860px){
+    .subnav{display:block;}
+    .nav .navlink{display:none;}
+    section{scroll-margin-top:112px;}
+  }
+  .mark{
+    font-weight:600;letter-spacing:.005em;font-size:1rem;
+    text-decoration:none;display:flex;align-items:center;gap:10px;
+  }
+  .mark::before{content:"";width:8px;height:8px;background:var(--accent);flex:none;}
+  .mark-short{display:none;}
+  @media (max-width:520px){
+    .mark-full{display:none;}
+    .mark-short{display:inline;}
+  }
+  .nav{display:flex;align-items:center;gap:22px;}
+  .navlink{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;
+    text-decoration:none;color:var(--ink-soft);
+  }
+  .navlink:hover{color:var(--accent);}
+
+  .btn{
+    display:inline-block;background:var(--accent);color:var(--on-accent);
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+    padding:13px 20px;border-radius:2px;text-decoration:none;
+    border:1px solid var(--accent);transition:background .18s,border-color .18s;
+  }
+  .btn:hover{background:var(--accent-deep);border-color:var(--accent-deep);}
+  .btn.ghost{background:transparent;color:var(--accent-deep);}
+  .btn.ghost:hover{background:transparent;border-color:var(--accent-deep);color:var(--accent);}
+  a:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+  section{scroll-margin-top:74px;}
+
+  /* hero */
+  .hero{padding:80px 0 64px;display:flex;flex-direction:column;gap:24px;}
+  .hero h1{font-size:clamp(2.3rem,5.6vw,3.7rem);line-height:1.08;max-width:17ch;}
+  .hero h1 .em{
+    display:block;font-style:italic;color:var(--accent);font-weight:500;
+  }
+  .lead{font-size:1.13rem;max-width:56ch;color:var(--ink-soft);}
+  .meta{
+    display:flex;flex-wrap:wrap;gap:10px 26px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .meta span{display:flex;align-items:center;gap:9px;}
+  .meta span::before{content:"";width:7px;height:7px;background:var(--accent);flex:none;}
+
+  .flow{display:flex;align-items:flex-start;margin-top:14px;max-width:720px;}
+  .flow .node{display:flex;flex-direction:column;gap:9px;max-width:15ch;}
+  .flow .node .dot{width:9px;height:9px;background:var(--accent);}
+  .flow .node .label{font-size:.82rem;color:var(--ink-soft);line-height:1.4;}
+  .flow .arrow{flex:1;min-width:26px;height:1px;background:var(--rule-strong);margin:5px 14px 0;}
+  @media (max-width:640px){
+    .flow{flex-direction:column;gap:16px;}
+    .flow .arrow{width:1px;height:20px;min-width:0;margin:0 0 0 4px;}
+  }
+
+  /* generic section */
+  .sec{padding:58px 0;border-top:1px solid var(--rule);}
+  .sec-label{margin-bottom:14px;}
+  .sec-title{font-size:clamp(1.6rem,3.2vw,2rem);line-height:1.15;max-width:26ch;}
+  .sec-intro{margin-top:14px;max-width:54ch;color:var(--ink-soft);}
+
+  /* qué hago */
+  .do-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-top:34px;}
+  .do .dot{width:8px;height:8px;background:var(--accent);margin-bottom:12px;}
+  .do h3{font-size:1.02rem;font-weight:600;margin-bottom:6px;}
+  .do p{font-size:.87rem;color:var(--ink-soft);}
+
+  /* proyectos */
+  .files{margin-top:8px;}
+  .file{
+    position:relative;border-top:1px solid var(--rule);
+    padding:40px 0 40px 18px;margin-left:-18px;
+    border-left:3px solid transparent;
+    transition:border-color .18s,background .18s;
+  }
+  .file:last-child{border-bottom:1px solid var(--rule);}
+  .file:hover{border-left-color:var(--accent);background:var(--paper-raised);}
+  .file-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;margin:9px 0 18px;}
+  .file-title{font-size:clamp(1.4rem,2.8vw,1.75rem);line-height:1.12;}
+  .status{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--accent-deep);display:inline-flex;align-items:center;gap:7px;
+    white-space:nowrap;
+  }
+  .status::before{content:"";width:7px;height:7px;background:var(--accent);flex:none;}
+  .status.obra{color:var(--amber);}
+  .status.obra::before{background:var(--amber);}
+
+  .file-narr{display:flex;flex-direction:column;gap:14px;max-width:64ch;}
+  .reserved{font-size:.86rem;color:var(--ink-faint);font-style:italic;}
+  .q .q-k{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-faint);margin-right:.6em;
+  }
+  .q p{display:inline;font-size:.96rem;color:var(--ink-soft);}
+
+  .colophon{
+    margin-top:22px;padding-top:16px;border-top:1px solid var(--rule);
+    display:flex;flex-direction:column;gap:5px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.74rem;color:var(--ink-faint);line-height:1.55;max-width:70ch;
+  }
+  .colophon b{color:var(--ink-soft);font-weight:500;}
+
+  .shots{
+    display:flex;gap:14px;margin-top:24px;overflow-x:auto;padding-bottom:8px;
+    scroll-snap-type:x proximity;
+  }
+  .shots figure{margin:0;flex:none;width:204px;scroll-snap-align:start;}
+  .shots img{
+    display:block;width:100%;height:auto;aspect-ratio:390/844;object-fit:cover;
+    border-radius:16px;border:1px solid var(--rule-strong);background:var(--paper-raised);
+  }
+  .shots figcaption{
+    margin-top:8px;font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.68rem;line-height:1.45;color:var(--ink-faint);letter-spacing:.02em;
+  }
+  .shots-note{margin-top:4px;font-size:.78rem;color:var(--ink-faint);font-style:italic;}
+  .decisions{margin:22px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px;max-width:64ch;}
+  .decisions-k{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.68rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:22px;
+  }
+  .decisions li{position:relative;padding-left:16px;font-size:.9rem;color:var(--ink-soft);}
+  .decisions li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;background:var(--accent);}
+  .demo{
+    margin-top:20px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;
+    padding:14px 16px;border:1px solid var(--rule-strong);background:var(--paper-raised);max-width:64ch;
+  }
+  .demo-txt{flex:1 1 260px;font-size:.88rem;color:var(--ink-soft);}
+  .demo-txt b{color:var(--ink);font-weight:600;}
+  .demo .btn{padding:11px 16px;}
+  .demo.pendiente .btn{background:transparent;border-color:var(--rule-strong);color:var(--ink-faint);pointer-events:none;}
+  .file-link{margin-top:14px;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.78rem;}
+  .file-link a{color:var(--accent-deep);}
+
+  /* proceso */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:34px;}
+  .step .dot{width:8px;height:8px;background:var(--accent);margin-bottom:12px;}
+  .step-n{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.74rem;color:var(--ink-faint);display:block;margin-bottom:4px;}
+  .step h3{font-size:1.08rem;font-weight:600;margin-bottom:6px;}
+  .step p{font-size:.88rem;color:var(--ink-soft);}
+
+  /* sobre mí */
+  .about{max-width:60ch;font-size:1.02rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:15px;}
+  .about strong{color:var(--ink);font-weight:600;}
+
+  /* trayectoria */
+  .cv{list-style:none;margin:30px 0 0;padding:0;display:flex;flex-direction:column;}
+  .cv li{
+    display:grid;grid-template-columns:150px 1fr;gap:6px 28px;
+    padding:20px 0;border-top:1px solid var(--rule);
+  }
+  .cv li:last-child{border-bottom:1px solid var(--rule);}
+  .cv-date{
+    font-family:"IBM Plex Mono",ui-monospace,monospace;
+    font-size:.74rem;letter-spacing:.04em;color:var(--ink-faint);padding-top:.25em;
+  }
+  .cv h3{font-size:1.04rem;font-weight:600;}
+  .cv-org{font-size:.9rem;color:var(--ink-soft);}
+  .cv p{margin-top:6px;font-size:.9rem;color:var(--ink-soft);max-width:62ch;}
+  .cv-dl{margin-top:20px;}
+  .skills{margin-top:30px;display:flex;flex-direction:column;gap:12px;}
+  .skills-row{display:grid;grid-template-columns:150px 1fr;gap:6px 28px;}
+  .skills-row .cv-date{padding-top:0;}
+  .skills-row span:last-child{font-size:.9rem;color:var(--ink-soft);}
+  @media (max-width:600px){
+    .cv li,.skills-row{grid-template-columns:1fr;}
+  }
+
+  /* contacto */
+  .contact{padding:66px 0 8px;border-top:1px solid var(--rule);}
+  .contact h2{font-size:clamp(1.75rem,3.8vw,2.4rem);line-height:1.12;max-width:22ch;}
+  .contact .lead{margin-top:16px;}
+  .contact-actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px;margin-top:28px;}
+  .wa{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.82rem;color:var(--ink-soft);}
+  .todo{text-decoration:underline dotted var(--amber);text-underline-offset:3px;color:var(--amber);}
+
+
+  .site-foot{border-top:1px solid var(--rule);margin-top:48px;padding:26px 0 46px;
+    font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.72rem;color:var(--ink-faint);}
+  .site-foot .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  @media (max-width:860px){
+    .steps{grid-template-columns:1fr;}
+    .do-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:600px){
+    .hero{padding:52px 0 44px;}
+    .do-grid{grid-template-columns:1fr;}
+    .nav .navlink{display:none;}
+    .file{margin-left:0;padding-left:16px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="wrap top">
+    <a class="mark" href="#top"><span class="mark-full">Mariano Fernández Burnengo</span><span class="mark-short">Mariano F. Burnengo</span></a>
+    <nav class="nav" aria-label="Secciones">
+      <a class="navlink" href="#que-hago">Qué hago</a>
+      <a class="navlink" href="#proyectos">Proyectos</a>
+      <a class="navlink" href="#proceso">Cómo trabajo</a>
+      <a class="navlink" href="#sobre-mi">Sobre mí</a>
+      <a class="navlink" href="#trayectoria">Trayectoria</a>
+      <a class="btn" href="#contacto">Escribime</a>
+    </nav>
+  </div>
+  <nav class="subnav" aria-label="Índice de secciones">
+    <div class="wrap">
+      <a href="#que-hago">Qué hago</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#proceso">Cómo trabajo</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#trayectoria">Trayectoria</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap" id="top">
+
+  <section class="hero">
+    <p class="eyebrow">Ingeniero electrónico · Desarrollo de software · Buenos Aires</p>
+    <h1 class="head">Papel, Excel y WhatsApp.<span class="em">Yo lo convierto en una app.</span></h1>
+    <p class="lead">Diseño y programo aplicaciones web y móviles a medida para pequeños negocios de Argentina. Tomo un proceso concreto —una inspección, una liquidación, la venta de entradas— y lo dejo funcionando en el celular, rápido y sin vueltas.</p>
+    <div class="meta">
+      <span>A medida</span>
+      <span>Andan sin señal</span>
+      <span>Entrega con plazo cerrado</span>
+    </div>
+    <div><a class="btn" id="cta-proyectos" href="#proyectos">Ver proyectos</a></div>
+    <div class="flow" aria-label="Cómo pienso un proyecto">
+      <div class="node"><span class="dot"></span><span class="label">Entender el problema</span></div>
+      <div class="arrow"></div>
+      <div class="node"><span class="dot"></span><span class="label">Diseñarlo como sistema</span></div>
+      <div class="arrow"></div>
+      <div class="node"><span class="dot"></span><span class="label">Solución funcionando en el celular</span></div>
+    </div>
+  </section>
+
+  <section class="sec" id="que-hago">
+    <p class="eyebrow sec-label">Qué hago</p>
+    <h2 class="sec-title head">Software para el trabajo que hoy vive en una planilla.</h2>
+    <div class="do-grid">
+      <div class="do">
+        <span class="dot"></span>
+        <h3>Apps a medida</h3>
+        <p>Para un proceso puntual: inspecciones, turnos, stock, cobranzas, liquidaciones.</p>
+      </div>
+      <div class="do">
+        <span class="dot"></span>
+        <h3>Funcionan sin señal</h3>
+        <p>Se instalan como una app común y siguen andando en un sótano o en la puerta de un evento. Sincronizan cuando vuelve la conexión.</p>
+      </div>
+      <div class="do">
+        <span class="dot"></span>
+        <h3>Sitios web rápidos</h3>
+        <p>Institucionales, multiidioma, livianos. Pensados para cargar bien en el celular y aparecer en Google.</p>
+      </div>
+      <div class="do">
+        <span class="dot"></span>
+        <h3>Integraciones</h3>
+        <p>Pagos con Mercado Pago, base de datos en la nube, envío de mails y notificaciones.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="proyectos">
+    <p class="eyebrow sec-label">Proyectos</p>
+    <h2 class="sec-title head">Cuatro, en cuatro rubros distintos.</h2>
+    <p class="sec-intro">Uno lo estoy desarrollando en la empresa donde trabajo, dos son productos propios y uno es un sitio institucional. Todos con código propio, en producción o en camino.</p>
+
+    <div class="files">
+
+      <article class="file">
+        <p class="eyebrow">Aplicación de gestión (PWA) · 2026 · Producto para la empresa</p>
+        <div class="file-head">
+          <h3 class="file-title head">Inspecciones técnicas en campo</h3>
+          <span class="status">En uso diario</span>
+        </div>
+        <div class="file-narr">
+          <p class="reserved">La estoy desarrollando en la empresa de ascensores donde soy representante técnico, para que la use y la incorpore como herramienta propia. No muestro datos de edificios ni de clientes, por privacidad operativa.</p>
+          <p class="q"><span class="q-k">El problema</span>Yo anotaba cada inspección mensual en papel y después pasaba todo a una planilla. Demoras, errores de transcripción y ninguna trazabilidad de qué se había revisado y cuándo.</p>
+          <p class="q"><span class="q-k">Qué construí</span>Una app que uso desde el celular en el lugar: recorrido por zonas, ficha por equipo con su número de registro, checklist e informe del mes que se arrastra al siguiente, foto y resultado. Funciona entera sin conexión y sincroniza al volver la señal. Genera la liquidación mensual en Excel con el formato que ya usaba y un archivo listo para cargar en el organismo de control. Ahora la estoy llevando a un sistema con cuentas por persona y roles —técnico, mantenedor, administración— para que la empresa la adopte de punta a punta.</p>
+        </div>
+        <div class="shots" role="group" aria-label="Pantallas de la app de inspecciones">
+          <figure><img src="img/inspecciones-1-recorrido.webp" width="390" height="844" loading="lazy" alt="Pantalla Recorrido: lista de edificios por zona con estado de visita"><figcaption>Recorrido del mes por zona, con el estado de cada edificio</figcaption></figure>
+          <figure><img src="img/inspecciones-2-liquidacion.webp" width="390" height="844" loading="lazy" alt="Pantalla Liquidación: totales del mes y detalle por conservador"><figcaption>Liquidación del mes y salidas en Excel y CSV</figcaption></figure>
+        </div>
+        <p class="shots-note">Pantallas de ejemplo con datos ficticios, reproducidas del diseño de la app.</p>
+        <div class="demo pendiente" data-demo="inspecciones">
+          <p class="demo-txt"><b>Probala vos.</b> Recorré edificios de ejemplo, marcá visitas y descargá la liquidación. Datos ficticios; lo que hagas queda solo en tu navegador.</p>
+          <a class="btn" href="#proyectos">Demo en preparación</a>
+        </div>
+        <p class="decisions-k">Decisiones de diseño</p>
+        <ul class="decisions">
+          <li>La base vive en el celular y la nube es un espejo: la app no depende de la señal, que en un subsuelo no hay.</li>
+          <li>Las reglas del negocio están aisladas y probadas (60+ tests), para poder cambiar la pantalla sin romper la liquidación.</li>
+          <li>Copias de seguridad automáticas antes de cada operación destructiva y un día de uso real en campo antes de pasar a producción.</li>
+          <li>Cada persona ve solo su cartera: el aislamiento entre cuentas se probó con cuentas de prueba, 10 de 10 chequeos.</li>
+        </ul>
+        <div class="colophon">
+          <div><b>Stack</b> — React 19 · Vite · TypeScript · base local (IndexedDB) + Supabase · 60+ tests</div>
+          <div><b>Escala</b> — +140 edificios · +200 equipos</div>
+          <div><b>Camino</b> — sumando técnicos y administración en las próximas semanas</div>
+        </div>
+      </article>
+
+      <article class="file">
+        <p class="eyebrow">Aplicación móvil (PWA) · 2026 · Producto propio</p>
+        <div class="file-head">
+          <h3 class="file-title head">Gastos compartidos</h3>
+          <span class="status">En uso a diario</span>
+        </div>
+        <div class="file-narr">
+          <p class="q"><span class="q-k">El problema</span>Llevar las cuentas compartidas de una casa en una planilla es tedioso, se desactualiza y termina en discusiones sobre quién puso qué.</p>
+          <p class="q"><span class="q-k">Qué construí</span>Una app instalable en el celular: cargás un gasto en segundos, se divide solo y cada persona ve su saldo del mes en tiempo real. Funciona sin conexión y guarda el gasto para subirlo cuando vuelve la señal. Categorías y subcategorías, presupuestos por rubro, gráficos de análisis, gastos personales que no se dividen y deshacer en un toque.</p>
+        </div>
+        <div class="shots" role="group" aria-label="Pantallas de la app de gastos">
+          <figure><img src="img/gastos-1-cargar.webp" width="390" height="844" loading="lazy" alt="Pantalla Cargar gasto: monto, categoría, quién pagó y tipo"><figcaption>Cargar un gasto en pocos toques</figcaption></figure>
+          <figure><img src="img/gastos-2-mes.webp" width="390" height="844" loading="lazy" alt="Pantalla Mes: balance, gráfico por categoría y presupuestos"><figcaption>Balance del mes, categorías y presupuestos</figcaption></figure>
+        </div>
+        <p class="shots-note">Pantallas de ejemplo con datos ficticios, reproducidas del diseño de la app.</p>
+        <div class="demo pendiente" data-demo="gastos">
+          <p class="demo-txt"><b>Probala vos.</b> Cargá gastos de ejemplo y mirá cómo cambia el balance. Datos ficticios; lo que hagas queda solo en tu navegador.</p>
+          <a class="btn" href="#proyectos">Demo en preparación</a>
+        </div>
+        <p class="decisions-k">Decisiones de diseño</p>
+        <ul class="decisions">
+          <li>Un gasto cargado sin señal se guarda y se sube solo al volver la conexión, con aviso de cuántos faltan.</li>
+          <li>Privacidad por persona: cada uno ve los gastos compartidos y solo sus propios gastos personales, resuelto en la base de datos y no en la pantalla.</li>
+          <li>Borrado con deshacer, en vez de pedir confirmación en cada acción.</li>
+          <li>Se importaron 18 meses de historia de la planilla original, categorizados.</li>
+        </ul>
+        <div class="colophon">
+          <div><b>Stack</b> — React · Vite · TypeScript · Tailwind · Supabase · PWA offline-first</div>
+          <div><b>Datos</b> — 18 meses de historia importados · +880 movimientos</div>
+          <div><b>Reemplaza</b> — una planilla de Google Drive</div>
+        </div>
+      </article>
+
+      <article class="file">
+        <p class="eyebrow">Sitio web · 2026 · Diseño y desarrollo</p>
+        <div class="file-head">
+          <h3 class="file-title head">Orquesta Invisible</h3>
+          <span class="status">En producción</span>
+        </div>
+        <div class="file-narr">
+          <p class="q"><span class="q-k">El problema</span>Un proyecto cultural que dependía de las redes sociales y no tenía un lugar propio donde mostrar su trabajo a público y programadores de otros países.</p>
+          <p class="q"><span class="q-k">Qué construí</span>Un sitio propio, liviano y responsive, con el contenido en seis idiomas servidos en carpetas separadas, etiquetas hreflang y canónicas en las 42 páginas, sitemap, robots y una sección de prensa. Dominio propio y despliegue automático en cada cambio.</p>
+        </div>
+        <div class="shots" role="group" aria-label="Pantallas del sitio de la Orquesta Invisible">
+          <figure><img src="img/orquesta-1-fechas.webp" width="390" height="844" loading="lazy" alt="Sección Próximas fechas del sitio, en celular"><figcaption>Próximas fechas, con enlace directo a la reserva</figcaption></figure>
+          <figure><img src="img/orquesta-2-prensa.webp" width="390" height="844" loading="lazy" alt="Sección Prensa del sitio, en celular"><figcaption>Sección de prensa con notas y citas</figcaption></figure>
+        </div>
+        <p class="decisions-k">Decisiones de diseño</p>
+        <ul class="decisions">
+          <li>Cada idioma es su propia carpeta con su propia dirección, para que Google muestre a cada visitante la versión que le corresponde.</li>
+          <li>Sin framework ni dependencias: carga rápido en el celular y se puede mantener durante años sin que nada se rompa.</li>
+          <li>Cada cambio que se sube se publica solo, con una lista de revisión para no olvidar nada en los seis idiomas.</li>
+        </ul>
+        <p class="file-link">Sitio en vivo: <a href="https://www.orquestainvisible.musica.ar/" rel="noopener">orquestainvisible.musica.ar</a></p>
+        <div class="colophon">
+          <div><b>Stack</b> — HTML / CSS / JS a mano · sin framework · GitHub Pages</div>
+          <div><b>Alcance</b> — 6 idiomas · 42 páginas · SEO internacional</div>
+          <div><b>En vivo</b> — orquestainvisible.musica.ar</div>
+        </div>
+      </article>
+
+      <article class="file">
+        <p class="eyebrow">Plataforma · En desarrollo · Producto propio</p>
+        <div class="file-head">
+          <h3 class="file-title head">Venta de entradas y control de acceso</h3>
+          <span class="status obra">En obra</span>
+        </div>
+        <div class="file-narr">
+          <p class="q"><span class="q-k">El problema</span>Los ciclos de eventos chicos y medianos dependen de plataformas grandes con comisiones altas y poco control sobre sus ventas y su público.</p>
+          <p class="q"><span class="q-k">Qué estoy construyendo</span>Página pública por evento con preview de flyer para redes, compra con reserva de cupo y vencimiento, pago con Mercado Pago verificado contra su API, entrada por mail con QR y una app de puerta que valida el QR sin conexión: baja la lista del evento al arrancar y encola los escaneos. Panel de ventas y reporte de liquidación por evento para el contador.</p>
+        </div>
+        <div class="shots" role="group" aria-label="Pantallas de la plataforma de venta de entradas">
+          <figure><img src="img/ticketera-2-evento.webp" width="390" height="844" loading="lazy" alt="Página de un evento con los tipos de entrada y su disponibilidad"><figcaption>Página pública del evento con sus tipos de entrada</figcaption></figure>
+          <figure><img src="img/ticketera-3-compra.webp" width="390" height="844" loading="lazy" alt="Formulario de compra con código de descuento aplicado"><figcaption>Compra con código de descuento</figcaption></figure>
+          <figure><img src="img/ticketera-4-pago-demo.webp" width="390" height="844" loading="lazy" alt="Pantalla de pago simulada en modo demo"><figcaption>Pago simulado, para probar todo el circuito sin cobrar</figcaption></figure>
+          <figure><img src="img/ticketera-6-entrada.webp" width="390" height="844" loading="lazy" alt="Entrada con código QR válido"><figcaption>La entrada con su QR, lista para escanear en la puerta</figcaption></figure>
+        </div>
+        <p class="shots-note">Capturas de la versión demo (pagos simulados, datos de ejemplo).</p>
+        <div class="demo pendiente" data-demo="ticketera">
+          <p class="demo-txt"><b>Probala vos.</b> Comprá una entrada con pago simulado y mirá cómo se valida en la puerta. Datos ficticios; no se cobra nada.</p>
+          <a class="btn" href="#proyectos">Demo en preparación</a>
+        </div>
+        <p class="decisions-k">Qué incluye y cómo se resolvió</p>
+        <ul class="decisions">
+          <li>La reserva de cupo es atómica. En una prueba de carga con 100 intentos simultáneos contra un cupo de 20, se reservaron exactamente 20 y no hubo sobreventa.</li>
+          <li>El pago se confirma consultando a Mercado Pago, sin confiar en lo que llega al webhook.</li>
+          <li>La app de puerta valida el QR sin conexión contra la lista del evento y sincroniza los ingresos cuando vuelve la señal.</li>
+          <li>Para el negocio: links de RRPP con comisión, códigos de descuento, cortesías, entradas con consumición para la barra, panel de ventas en vivo y liquidación por evento exportable.</li>
+        </ul>
+        <div class="colophon">
+          <div><b>Stack</b> — Next.js · React · Tailwind · Supabase · Mercado Pago · Resend</div>
+          <div><b>Contexto</b> — un local, 15–20 eventos por mes</div>
+          <div><b>Estado</b> — piloto previsto para diciembre de 2026, tal vez antes</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="sec" id="proceso">
+    <p class="eyebrow sec-label">Cómo trabajo</p>
+    <h2 class="sec-title head">Tres pasos, sin sorpresas en la factura.</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="dot"></span>
+        <span class="step-n">01</span>
+        <h3>Entiendo el proceso</h3>
+        <p>Una charla para ver cómo lo hacés hoy, con la planilla o el cuaderno a la vista, y dónde se pierde el tiempo.</p>
+      </div>
+      <div class="step">
+        <span class="dot"></span>
+        <span class="step-n">02</span>
+        <h3>Propongo algo concreto</h3>
+        <p>Alcance, plazo y precio cerrados antes de empezar. Si algo se agranda, lo hablamos; no aparece de sorpresa.</p>
+      </div>
+      <div class="step">
+        <span class="dot"></span>
+        <span class="step-n">03</span>
+        <h3>Entrego y acompaño</h3>
+        <p>Una versión funcionando en tu celular, más soporte para los ajustes de las primeras semanas de uso real.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="sobre-mi">
+    <p class="eyebrow sec-label">Sobre mí</p>
+    <div class="about">
+      <p>Soy Mariano, <strong>ingeniero electrónico</strong>. Mi formación es de la parte dura de la ingeniería: entender un problema a fondo, pensarlo como sistema y diseñar una solución que funcione — hoy aplico eso a mi propio trabajo de campo, inspeccionando instalaciones técnicas.</p>
+      <p>Con el tiempo noté que buena parte de ese trabajo —recorridos, registro de fallas, liquidación mensual— se manejaba en Excel y planillas sueltas, sin ninguna herramienta pensada para eso. En vez de esperar a que alguien más lo resolviera, empecé a construirla yo mismo, dentro de la empresa donde soy representante técnico: hoy es el primer proyecto de esta página, pensado para que la empresa la use y la adopte de punta a punta.</p>
+      <p>La desarrollo con herramientas de IA —Claude Code—, que me dejan poner la energía en lo que mejor sé hacer: entender el problema, definir cómo tiene que funcionar la solución, evaluar si lo que se construye realmente lo resuelve. En el camino, aprendo los fundamentos técnicos de cómo se arma una aplicación real.</p>
+      <p>Busco seguir combinando esa capacidad de análisis con estas herramientas, para llevar una idea hasta un producto funcionando <strong>sin depender pura y exclusivamente de otro desarrollador</strong>.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="trayectoria">
+    <p class="eyebrow sec-label">Trayectoria</p>
+    <h2 class="sec-title head">Ingeniería, desarrollo web y datos.</h2>
+    <p class="cv-dl"><a class="btn ghost" href="Mariano-Fernandez-Burnengo-CV.pdf" download>Descargar CV (PDF)</a></p>
+    <ol class="cv">
+      <li>
+        <span class="cv-date">2015 — hoy</span>
+        <div>
+          <h3>Representante técnico</h3>
+          <p class="cv-org">Sector ascensores · Buenos Aires</p>
+          <p>Inspección técnica de instalaciones en campo y liquidación mensual. Desde acá nació la herramienta de gestión que figura como primer proyecto.</p>
+        </div>
+      </li>
+      <li>
+        <span class="cv-date">Mar 2024</span>
+        <div>
+          <h3>Data scientist</h3>
+          <p class="cv-org">Escuela de Datos Vivos · Bootcamp</p>
+          <p>Machine learning y análisis exploratorio de datos con Python, SQL, Pandas y TensorFlow.</p>
+        </div>
+      </li>
+      <li>
+        <span class="cv-date">2013 — 2015</span>
+        <div>
+          <h3>Desarrollador web</h3>
+          <p class="cv-org">Profes ya</p>
+          <p>Sitio para gestionar la solicitud de clases presenciales, más un sistema de gestión interno para el personal de la organización, hecho con PHP y SQL.</p>
+        </div>
+      </li>
+      <li>
+        <span class="cv-date">2006 — 2014</span>
+        <div>
+          <h3>Ingeniero electrónico</h3>
+          <p class="cv-org">ITBA</p>
+        </div>
+      </li>
+    </ol>
+    <div class="skills">
+      <div class="skills-row"><span class="cv-date">Desarrollo</span><span>React · TypeScript · Vite · PWA offline-first · PHP · HTML / CSS / JS</span></div>
+      <div class="skills-row"><span class="cv-date">Datos</span><span>Python · SQL · Pandas · TensorFlow · Supabase (PostgreSQL)</span></div>
+      <div class="skills-row"><span class="cv-date">Fuera del código</span><span>Músico multiinstrumentista. Toco en la Orquesta Invisible.</span></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contacto">
+    <h2 class="head">¿Tenés un proceso que te está haciendo perder tiempo?</h2>
+    <p class="lead">Contame qué necesitás y te respondo si puedo ayudarte y cómo lo encararía. Sin compromiso.</p>
+    <div class="contact-actions">
+      <a class="btn" href="mailto:mariano.lfb@gmail.com?subject=Consulta%20por%20un%20proyecto">mariano.lfb@gmail.com</a>
+      <a class="wa" href="https://wa.me/5491132509004?text=Hola%20Mariano%2C%20vi%20tu%20portfolio%20y%20quer%C3%ADa%20consultarte%20por%20un%20proyecto.">WhatsApp · 11 3250 9004</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <span>Mariano Fernández Burnengo · Buenos Aires · 2026</span>
+    <span>Hecho por mí, obviamente. HTML plano, sin rastreadores.</span>
+  </div>
+</footer>
+
+<script>
+  /* Demos: pegá acá la URL de cada una cuando esté lista. Vacío = "Demo en preparación". */
+  var DEMOS = { inspecciones: "", gastos: "", ticketera: "" };
+  var hayDemos = false;
+  document.querySelectorAll("[data-demo]").forEach(function (box) {
+    var url = DEMOS[box.getAttribute("data-demo")];
+    if (!url) { box.hidden = true; return; }
+    hayDemos = true;
+    var a = box.querySelector("a");
+    a.href = url; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Probar la demo";
+    box.classList.remove("pendiente");
+  });
+  var cta = document.getElementById("cta-proyectos");
+  if (cta) cta.textContent = hayDemos ? "Ver proyectos y probar las demos" : "Ver proyectos";
+</script>
+
+<script>
+  (function () {
+    var ids = ["que-hago", "proyectos", "proceso", "sobre-mi", "trayectoria", "contacto"];
+    var links = document.querySelectorAll(".navlink, .subnav a");
+    function mark(id) {
+      var current = null;
+      links.forEach(function (a) {
+        if (a.getAttribute("href") === "#" + id) { a.setAttribute("aria-current", "true"); if (a.closest(".subnav")) current = a; }
+        else a.removeAttribute("aria-current");
+      });
+      if (current) { var bar = current.parentNode; bar.scrollLeft = current.offsetLeft - 24; }
+    }
+    if (!("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) mark(e.target.id); });
+    }, { rootMargin: "-25% 0px -65% 0px" });
+    ids.forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

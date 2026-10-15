@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mariano Fernández Burnengo — CV</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  @page{size:A4;margin:11mm 14mm;}
+  *{box-sizing:border-box;}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{
+    margin:0;background:#fff;color:#1c2128;
+    font-family:"Archivo",system-ui,"Segoe UI",Arial,sans-serif;
+    font-size:8.9pt;line-height:1.42;
+  }
+  h1,h2,h3,p,ul{margin:0;padding:0;}
+  ul{list-style:none;}
+  .serif{font-family:"Newsreader",Georgia,"Times New Roman",serif;}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;}
+
+  header{padding-bottom:7pt;border-bottom:1.2pt solid #245e8c;}
+  h1{font-size:23pt;line-height:1.05;font-weight:500;letter-spacing:-.01em;}
+  .role{margin-top:5pt;font-size:11pt;color:#245e8c;font-style:italic;}
+  .contact{
+    margin-top:8pt;display:flex;flex-wrap:wrap;gap:2pt 14pt;
+    font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+    font-size:7.8pt;color:#4b535c;
+  }
+
+  section{margin-top:9pt;break-inside:auto;}
+  h2{
+    font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+    font-size:7.6pt;letter-spacing:.14em;text-transform:uppercase;
+    color:#245e8c;font-weight:500;
+    padding-bottom:2pt;border-bottom:.5pt solid #d7dde1;margin-bottom:5pt;
+  }
+  .lead{color:#2c333b;max-width:none;}
+
+  .item{
+    display:grid;grid-template-columns:34mm 1fr;gap:0 9pt;
+    margin-top:5.5pt;break-inside:avoid;
+  }
+  .item:first-of-type{margin-top:0;}
+  .when{
+    font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+    font-size:7.4pt;color:#7c848b;padding-top:1.5pt;white-space:nowrap;
+  }
+  h3{font-size:9.8pt;font-weight:600;}
+  .org{color:#4b535c;font-size:9pt;}
+  .item ul{margin-top:3pt;}
+  .item li{position:relative;padding-left:9pt;margin-top:2pt;color:#2c333b;}
+  .item li::before{content:"";position:absolute;left:0;top:.55em;width:3.4pt;height:3.4pt;background:#245e8c;}
+  .stack{margin-top:2pt;font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:7.4pt;color:#7c848b;}
+
+  .skills{display:grid;grid-template-columns:34mm 1fr;gap:3pt 10pt;}
+  .skills .when{padding-top:0;}
+  .skills span:nth-child(even){color:#2c333b;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="serif">Mariano Fernández Burnengo</h1>
+  <p class="role serif">Ingeniero electrónico · Desarrollo de software</p>
+  <div class="contact">
+    <span>mariano.lfb@gmail.com</span>
+    <span>WhatsApp +54 9 11 3250 9004</span>
+    <span>Buenos Aires, Argentina</span>
+    <span>linkedin.com/in/mariano-fburnengo</span>
+  </div>
+</header>
+
+<section>
+  <h2>Perfil</h2>
+  <p class="lead">Ingeniero electrónico (ITBA) con más de diez años como representante técnico en el sector de ascensores y experiencia previa en desarrollo web (PHP y SQL). Diseño y desarrollo aplicaciones web y móviles a medida para pequeños negocios: entiendo el proceso de punta a punta, lo diseño como sistema y lo dejo funcionando en el celular. Trabajo con herramientas de IA (Claude Code) para llevar una idea hasta un producto en uso, enfocado en entender el problema, definir cómo debe funcionar la solución y verificar que realmente lo resuelva.</p>
+</section>
+
+<section>
+  <h2>Experiencia</h2>
+  <div class="item">
+    <div class="when">Jul 2015 — actualidad</div>
+    <div>
+      <h3>Representante técnico</h3>
+      <p class="org">Sector ascensores · Buenos Aires</p>
+      <ul>
+        <li>Inspección técnica de instalaciones en campo, informes y liquidación mensual.</li>
+        <li>Diseño y desarrollo de una aplicación de gestión de inspecciones que reemplaza papel y planillas: recorrido por zonas, ficha por equipo, informe mensual, liquidación en Excel y archivo para el organismo de control. Funciona sin conexión y sincroniza al volver la señal.</li>
+        <li>Hoy en uso diario, con más de 140 edificios y 200 equipos cargados; en implementación para la empresa, con cuentas por persona y roles (técnico, mantenedor, administración).</li>
+      </ul>
+      <p class="stack">React 19 · TypeScript · Vite · PWA · IndexedDB · Supabase</p>
+    </div>
+  </div>
+  <div class="item">
+    <div class="when">Feb 2013 — Ago 2015</div>
+    <div>
+      <h3>Desarrollador web</h3>
+      <p class="org">Profes ya · Buenos Aires</p>
+      <ul>
+        <li>Sitio web para gestionar solicitudes de clases presenciales, más un sistema de gestión interno para el personal de la organización, desarrollado con PHP y SQL.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="item">
+    <div class="when">Ago 2008 — Mar 2010</div>
+    <div>
+      <h3>Técnico en armado de equipos electrónicos</h3>
+      <p class="org">Aliasing · Buenos Aires</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Proyectos</h2>
+  <div class="item">
+    <div class="when">2026</div>
+    <div>
+      <h3>Gastos compartidos</h3>
+      <p class="org">App móvil offline-first que reemplaza una planilla: división automática, presupuestos por rubro, gráficos y 18 meses de historia importados (+880 movimientos).</p>
+      <p class="stack">React · TypeScript · Tailwind · Supabase</p>
+    </div>
+  </div>
+  <div class="item">
+    <div class="when">2026</div>
+    <div>
+      <h3>Orquesta Invisible</h3>
+      <p class="org">Sitio web en seis idiomas (42 páginas) con hreflang, sitemap y despliegue automático. orquestainvisible.musica.ar</p>
+      <p class="stack">HTML · CSS · JS · GitHub Pages</p>
+    </div>
+  </div>
+  <div class="item">
+    <div class="when">En desarrollo</div>
+    <div>
+      <h3>Venta de entradas y control de acceso</h3>
+      <p class="org">Plataforma de ticketing con pago por Mercado Pago, entrada con QR por mail y app de puerta que valida sin conexión. Piloto previsto para diciembre de 2026.</p>
+      <p class="stack">Next.js · React · Supabase · Mercado Pago · Resend</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Educación</h2>
+  <div class="item">
+    <div class="when">Mar 2006 — Dic 2014</div>
+    <div>
+      <h3>Ingeniero electrónico</h3>
+      <p class="org">ITBA</p>
+    </div>
+  </div>
+  <div class="item">
+    <div class="when">Mar 2024</div>
+    <div>
+      <h3>Data scientist · Bootcamp</h3>
+      <p class="org">Escuela de Datos Vivos · Machine learning y análisis exploratorio de datos</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Habilidades</h2>
+  <div class="skills">
+    <span class="when">Desarrollo</span><span>React · TypeScript · Vite · PWA offline-first · PHP · HTML / CSS / JavaScript · Git y GitHub</span>
+    <span class="when">Datos</span><span>Python · SQL · Pandas · TensorFlow · Supabase (PostgreSQL)</span>
+    <span class="when">Otros</span><span>Músico multiinstrumentista (Orquesta Invisible) · Deporte</span>
+  </div>
+</section>
+
+</body>
+</html>
