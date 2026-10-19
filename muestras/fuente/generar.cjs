@@ -182,7 +182,7 @@ for (const a of apps) {
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap">
 <style>${css}</style></head><body>
 <section>
-  <div class="top"><span class="n">Mariano Fernández Burnengo</span><span class="e">Ingeniero electrónico · Desarrollo de software</span></div>
+  <div class="top"><span class="n">Mariano Burnengo</span><span class="e">Ingeniero electrónico · Desarrollo de software</span></div>
   <h1>${esc(a.titulo)}</h1>
   <p class="etq">${esc(a.etiqueta)}</p>
   <p class="lead">${esc(a.resumen)}</p>
@@ -199,7 +199,7 @@ for (const a of apps) {
   <h2>Paso a paso</h2><ol class="pasos">${pasos}</ol>
   <div class="demo"><b>Demo en línea:</b> <a href="${a.url}">${a.url}</a>
     <p class="nota">Todos los datos son inventados y lo que hagas queda solo en tu navegador. ${a.notaPin ? esc(a.notaPin) : ""} Se puede abrir desde el celular o la compu.</p></div>
-  <p class="pie">Mariano Fernández Burnengo · Ingeniero electrónico · Buenos Aires</p>
+  <p class="pie">Mariano Burnengo · Ingeniero electrónico · Buenos Aires</p>
 </section>
 </body></html>`;
   fs.writeFileSync(path.join(__dirname, a.slug + ".html"), html);
