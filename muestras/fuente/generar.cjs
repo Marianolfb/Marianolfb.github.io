@@ -136,20 +136,20 @@ h1,h2,h3,p,ul,ol{margin:0;padding:0;}
 ul,ol{list-style:none;}
 .serif{font-family:"Newsreader",Georgia,serif;}
 .mono{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;}
-.top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.2pt solid #245e8c;padding-bottom:6pt;}
+.top{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1.2pt solid #a4512b;padding-bottom:6pt;}
 .top .n{font-weight:600;font-size:9.5pt;}
 .top .e{font-family:"IBM Plex Mono",monospace;font-size:7.4pt;color:#7c848b;letter-spacing:.06em;text-transform:uppercase;}
 h1{font-family:"Newsreader",Georgia,serif;font-weight:500;font-size:24pt;line-height:1.08;margin-top:14pt;letter-spacing:-.01em;}
-.etq{margin-top:6pt;font-family:"IBM Plex Mono",monospace;font-size:8pt;color:#245e8c;letter-spacing:.06em;text-transform:uppercase;}
+.etq{margin-top:6pt;font-family:"IBM Plex Mono",monospace;font-size:8pt;color:#a4512b;letter-spacing:.06em;text-transform:uppercase;}
 .lead{margin-top:10pt;font-size:11pt;color:#2c333b;max-width:150mm;}
-h2{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:7.8pt;letter-spacing:.14em;text-transform:uppercase;color:#245e8c;margin:15pt 0 5pt;padding-bottom:3pt;border-bottom:.5pt solid #d7dde1;}
+h2{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:7.8pt;letter-spacing:.14em;text-transform:uppercase;color:#a4512b;margin:15pt 0 5pt;padding-bottom:3pt;border-bottom:.5pt solid #d7dde1;}
 .lista li{position:relative;padding-left:11pt;margin-top:3pt;color:#2c333b;}
-.lista li::before{content:"";position:absolute;left:0;top:.55em;width:4pt;height:4pt;background:#245e8c;}
+.lista li::before{content:"";position:absolute;left:0;top:.55em;width:4pt;height:4pt;background:#a4512b;}
 .pasos li{display:grid;grid-template-columns:16pt 1fr;gap:6pt;margin-top:5pt;color:#2c333b;}
-.pasos .num{font-family:"IBM Plex Mono",monospace;font-size:8.5pt;font-weight:600;color:#fff;background:#245e8c;width:14pt;height:14pt;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1pt;}
-.demo{margin-top:12pt;padding:8pt 10pt;border:.8pt solid #245e8c;background:#eef1f4;}
+.pasos .num{font-family:"IBM Plex Mono",monospace;font-size:8.5pt;font-weight:600;color:#fff;background:#a4512b;width:14pt;height:14pt;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1pt;}
+.demo{margin-top:12pt;padding:8pt 10pt;border:.8pt solid #a4512b;background:#f6f1e8;}
 .demo b{font-weight:600;}
-.demo a{color:#184568;font-family:"IBM Plex Mono",monospace;font-size:9.5pt;word-break:break-all;}
+.demo a{color:#7e3c1f;font-family:"IBM Plex Mono",monospace;font-size:9.5pt;word-break:break-all;}
 .nota{margin-top:5pt;font-size:8.5pt;color:#4b535c;}
 .meta{margin-top:11pt;font-family:"IBM Plex Mono",monospace;font-size:7.8pt;color:#4b535c;line-height:1.6;}
 .meta b{color:#1c2128;font-weight:500;}
@@ -160,7 +160,7 @@ h2{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:7.8pt;letter-
 figure{margin:0;}
 figure img{display:block;width:100%;height:auto;border:.8pt solid #b7c0c6;border-radius:9pt;}
 figcaption{margin-top:4pt;font-family:"IBM Plex Mono",monospace;font-size:7.4pt;color:#4b535c;letter-spacing:.02em;}
-figcaption b{color:#245e8c;}
+figcaption b{color:#a4512b;}
 .pie{margin-top:12pt;font-family:"IBM Plex Mono",monospace;font-size:7.4pt;color:#7c848b;text-align:center;}
 `;
 
@@ -182,7 +182,7 @@ for (const a of apps) {
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap">
 <style>${css}</style></head><body>
 <section>
-  <div class="top"><span class="n">Mariano Burnengo</span><span class="e">Ingeniero electrónico · Desarrollo de software</span></div>
+  <div class="top"><span class="n">Mundano</span><span class="e">por Mariano Burnengo · Ingeniero electrónico</span></div>
   <h1>${esc(a.titulo)}</h1>
   <p class="etq">${esc(a.etiqueta)}</p>
   <p class="lead">${esc(a.resumen)}</p>
@@ -199,7 +199,7 @@ for (const a of apps) {
   <h2>Paso a paso</h2><ol class="pasos">${pasos}</ol>
   <div class="demo"><b>Demo en línea:</b> <a href="${a.url}">${a.url}</a>
     <p class="nota">Todos los datos son inventados y lo que hagas queda solo en tu navegador. ${a.notaPin ? esc(a.notaPin) : ""} Se puede abrir desde el celular o la compu.</p></div>
-  <p class="pie">Mariano Burnengo · Ingeniero electrónico · Buenos Aires</p>
+  <p class="pie">Mundano, por Mariano Burnengo · Hecho con IA, pensado por personas. · Buenos Aires</p>
 </section>
 </body></html>`;
   fs.writeFileSync(path.join(__dirname, a.slug + ".html"), html);
