@@ -129,17 +129,9 @@
   @media (max-width:760px){.pasos{grid-template-columns:1fr;gap:28px}}
 
   /* sobre mí */
-  .sobre{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:56px;margin-top:36px;align-items:start}
-  @media (max-width:820px){.sobre{grid-template-columns:1fr;gap:40px}}
+  .sobre{margin-top:36px;max-width:720px}
   .texto-sobre{display:flex;flex-direction:column;gap:16px;color:var(--tinta-suave);font-size:1.03rem}
   .texto-sobre strong{color:var(--tinta);font-weight:600}
-  .trayectoria{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
-  .trayectoria li{display:grid;grid-template-columns:96px 1fr;gap:12px}
-  .trayectoria .cuando{font-size:.82rem;color:var(--tinta-tenue);padding-top:.15em}
-  .trayectoria h3{font-size:1rem;font-weight:600}
-  .trayectoria p{font-size:.88rem;color:var(--tinta-suave)}
-  .lado-sobre{display:flex;flex-direction:column;gap:24px}
-  .lado-sobre details .detalle p{font-size:.9rem}
 
   /* contacto */
   .contacto{padding:96px 0;text-align:center;border-top:1px solid var(--linea)}
@@ -349,30 +341,8 @@
       <div class="sobre">
         <div class="texto-sobre">
           <p>Soy Mariano, <strong>ingeniero electrónico</strong>. Mi formación es de la parte dura de la ingeniería: entender un problema a fondo, pensarlo como sistema y diseñar una solución que funcione. Hoy aplico eso a mi propio trabajo de campo, inspeccionando instalaciones técnicas.</p>
-          <p>Con el tiempo noté que buena parte de ese trabajo (recorridos, registro de fallas, liquidación mensual) se manejaba en Excel y planillas sueltas, sin ninguna herramienta pensada para eso. En vez de esperar a que alguien más lo resolviera, empecé a construirla yo mismo, dentro de la empresa donde soy representante técnico: hoy es el primer proyecto de esta página, pensado para que la empresa la use y la adopte de punta a punta.</p>
-          <p>La desarrollo con herramientas de IA (Claude Code), que me dejan poner la energía en lo que mejor sé hacer: entender el problema, definir cómo tiene que funcionar la solución, evaluar si lo que se construye realmente lo resuelve. En el camino, aprendo los fundamentos técnicos de cómo se arma una aplicación real.</p>
+          <p>Desarrollo con herramientas de IA (Claude Code), que me dejan poner la energía en lo que mejor sé hacer: entender el problema, definir cómo tiene que funcionar la solución, evaluar si lo que se construye realmente lo resuelve. En el camino, aprendo los fundamentos técnicos de cómo se arma una aplicación real.</p>
           <p>Busco seguir combinando esa capacidad de análisis con estas herramientas, para llevar una idea hasta un producto funcionando <strong>sin depender pura y exclusivamente de otro desarrollador</strong>.</p>
-        </div>
-        <div class="lado-sobre">
-          <ol class="trayectoria" id="trayectoria">
-            <li><span class="cuando">2015 — hoy</span><div><h3>Representante técnico</h3><p>Sector ascensores · Buenos Aires</p></div></li>
-            <li><span class="cuando">Mar 2024</span><div><h3>Data scientist</h3><p>Escuela de Datos Vivos · Bootcamp</p></div></li>
-            <li><span class="cuando">2013 — 2015</span><div><h3>Desarrollador web</h3><p>Profes ya</p></div></li>
-            <li><span class="cuando">2006 — 2014</span><div><h3>Ingeniero electrónico</h3><p>ITBA</p></div></li>
-          </ol>
-          <details>
-            <summary>Ver detalle</summary>
-            <div class="detalle">
-              <p><b>Representante técnico.</b> Inspección técnica de instalaciones en campo y liquidación mensual. Desde acá nació la herramienta de gestión que figura como primer proyecto.</p>
-              <p><b>Data scientist.</b> Machine learning y análisis exploratorio de datos con Python, SQL, Pandas y TensorFlow.</p>
-              <p><b>Desarrollador web.</b> Sitio para gestionar la solicitud de clases presenciales, más un sistema de gestión interno para el personal de la organización, hecho con PHP y SQL.</p>
-              <p><b>Propias:</b> Análisis de requisitos · Diseño de sistemas · Pruebas y verificación · Electrónica · Desarrollo asistido por IA</p>
-              <p><b>Experiencia previa:</b> PHP y SQL (desarrollo web) · Python, Pandas y TensorFlow (bootcamp de datos)</p>
-              <p><b>Stack de proyectos:</b> React · TypeScript · Vite · Supabase · PWA offline-first · HTML / CSS / JS</p>
-              <p><b>Fuera del código:</b> Músico multiinstrumentista. Toco en la Orquesta Invisible.</p>
-            </div>
-          </details>
-          <div><a class="btn suave" href="Mariano-Fernandez-Burnengo-CV.pdf" download>Descargar CV (PDF)</a></div>
         </div>
       </div>
     </div>
