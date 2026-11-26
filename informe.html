@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Informe de visita · Mundano</title>
+<meta name="description" content="Ejemplo de formulario que arma el documento solo: completás, firmás con el dedo y sale el PDF.">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<meta name="theme-color" content="#f3efe7">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
+<link rel="stylesheet" href="estilo.css">
+<style>
+  .item{padding:14px 0;border-top:1px solid var(--linea)}
+  .item:first-child{border-top:0;padding-top:0}
+  .item>b{display:block;font-weight:600;margin-bottom:10px}
+  .estado-opc .opcion span{min-height:40px;padding:8px 14px}
+  .estado-opc input[value="Bien"]:checked+span{border-color:var(--oliva);background:color-mix(in srgb,var(--oliva) 16%,transparent)}
+  .estado-opc input[value="Observación"]:checked+span{border-color:var(--ambar);background:color-mix(in srgb,var(--ambar) 16%,transparent)}
+  .estado-opc input[value="Falla"]:checked+span{border-color:var(--rojo);background:color-mix(in srgb,var(--rojo) 14%,transparent)}
+  .item .campo{margin:10px 0 0}
+  .fotos{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+  .fotos img{width:96px;height:96px;object-fit:cover;border-radius:12px;border:1px solid var(--linea)}
+  .firma{width:100%;height:170px;background:#fff;border:1.5px dashed var(--linea);border-radius:12px;touch-action:none;display:block}
+  .sub{font-size:1.25rem;margin:30px 0 14px}
+  .antes{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+  .antes div{background:var(--papel-alto);border:1px solid var(--linea);border-radius:16px;padding:16px 18px;font-size:.95rem;color:var(--tinta-suave)}
+  .antes b{display:block;color:var(--tierra);font-size:.82rem;margin-bottom:4px}
+  @media (max-width:600px){.antes{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="cabeza" id="cabeza"></header>
+
+<main>
+  <section class="wrap angosto portada chica">
+    <p class="etiqueta">Informe de visita</p>
+    <h1 class="serif">Completás, firmás y sale el PDF.</h1>
+    <p class="bajada">Un ejemplo de formulario para una empresa ficticia de servicio técnico. Funciona en tu navegador: no se guarda ni se envía nada.</p>
+    <div class="antes">
+      <div><b>Antes</b>Se anota en papel durante la visita y después se pasa en limpio en la compu.</div>
+      <div><b>Ahora</b>El informe queda listo al terminar la visita, con fotos y firma.</div>
+    </div>
+  </section>
+
+  <section class="wrap angosto" style="padding-bottom:88px">
+    <form class="panel" id="form" onsubmit="return false">
+      <h2 class="serif sub" style="margin-top:0">Datos de la visita</h2>
+      <div class="dos">
+        <label class="campo"><span>Cliente</span><input id="cliente" value="Consorcio Ejemplo 1234"></label>
+        <label class="campo"><span>Dirección</span><input id="direccion" value="Av. Siempreviva 742, CABA"></label>
+        <label class="campo"><span>Fecha</span><input id="fecha" type="date"></label>
+        <label class="campo"><span>Técnico</span><input id="tecnico" value="Juan Pérez"></label>
+      </div>
+
+      <h2 class="serif sub">Puntos revisados</h2>
+      <div id="items"></div>
+
+      <h2 class="serif sub">Fotos</h2>
+      <label class="btn suave" style="width:max-content">Agregar foto<input type="file" id="foto" accept="image/*" capture="environment" multiple hidden></label>
+      <div class="fotos" id="fotos"></div>
+
+      <h2 class="serif sub">Firma de conformidad</h2>
+      <canvas class="firma" id="firma" aria-label="Espacio para firmar con el dedo o el mouse"></canvas>
+      <div class="dos" style="margin-top:12px;align-items:end">
+        <label class="campo" style="margin:0"><span>Aclaración</span><input id="firmante" placeholder="Nombre de quien firma"></label>
+        <div><button type="button" class="btn suave" id="borrarFirma">Borrar firma</button></div>
+      </div>
+
+      <div class="resultado">
+        <div class="acciones">
+          <button type="button" class="btn" id="generar">Generar PDF</button>
+          <button type="button" class="btn suave" id="compartir" hidden>Compartir</button>
+        </div>
+        <p class="aviso" id="estadoPdf">El documento se arma en tu dispositivo.</p>
+      </div>
+    </form>
+  </section>
+</main>
+
+<footer class="pie" id="pie"></footer>
+<script src="comun.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+  var PUNTOS = ["Estado general del equipo", "Limpieza", "Conexiones eléctricas", "Funcionamiento", "Elementos de seguridad"];
+  var ESTADOS = ["Bien", "Observación", "Falla"];
+  var hoy = new Date();
+  function dos(n) { return (n < 10 ? "0" : "") + n; }
+  document.getElementById("fecha").value = hoy.getFullYear() + "-" + dos(hoy.getMonth() + 1) + "-" + dos(hoy.getDate());
+
+  document.getElementById("items").innerHTML = PUNTOS.map(function (p, i) {
+    return '<div class="item"><b>' + p + '</b><div class="opciones estado-opc">' +
+      ESTADOS.map(function (e, j) { return '<label class="opcion"><input type="radio" name="p' + i + '" value="' + e + '"' + (j === 0 ? " checked" : "") + '><span>' + e + '</span></label>'; }).join("") +
+      '</div><label class="campo"><input id="c' + i + '" placeholder="Comentario (opcional)"></label></div>';
+  }).join("");
+
+  /* fotos: se achican en el navegador */
+  var fotos = [];
+  document.getElementById("foto").addEventListener("change", function (ev) {
+    Array.prototype.forEach.call(ev.target.files, function (f) {
+      if (fotos.length >= 4) return;
+      var img = new Image(), url = URL.createObjectURL(f);
+      img.onload = function () {
+        var max = 900, k = Math.min(1, max / Math.max(img.width, img.height));
+        var c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        fotos.push({ data: c.toDataURL("image/jpeg", .82), w: c.width, h: c.height });
+        URL.revokeObjectURL(url); pintarFotos();
+      };
+      img.src = url;
+    });
+    ev.target.value = "";
+  });
+  function pintarFotos() {
+    document.getElementById("fotos").innerHTML = fotos.map(function (f) { return '<img src="' + f.data + '" alt="Foto adjunta">'; }).join("");
+  }
+
+  /* firma */
+  var cv = document.getElementById("firma"), ctx = cv.getContext("2d"), dibujando = false, hayFirma = false;
+  function ajustar() {
+    var r = cv.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    var previa = hayFirma ? cv.toDataURL() : null;
+    cv.width = r.width * d; cv.height = r.height * d;
+    ctx.scale(d, d); ctx.lineWidth = 2.2; ctx.lineCap = "round"; ctx.lineJoin = "round"; ctx.strokeStyle = "#26221d";
+    if (previa) { var im = new Image(); im.onload = function () { ctx.drawImage(im, 0, 0, r.width, r.height); }; im.src = previa; }
+  }
+  ajustar(); window.addEventListener("resize", ajustar);
+  function pos(e) { var r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; }
+  cv.addEventListener("pointerdown", function (e) { dibujando = true; hayFirma = true; cv.setPointerCapture(e.pointerId); var p = pos(e); ctx.beginPath(); ctx.moveTo(p[0], p[1]); });
+  cv.addEventListener("pointermove", function (e) { if (!dibujando) return; var p = pos(e); ctx.lineTo(p[0], p[1]); ctx.stroke(); });
+  cv.addEventListener("pointerup", function () { dibujando = false; });
+  document.getElementById("borrarFirma").addEventListener("click", function () { ctx.clearRect(0, 0, cv.width, cv.height); hayFirma = false; });
+
+  function v(id) { return document.getElementById(id).value.trim(); }
+  function fechaLarga(iso) { var p = iso.split("-"); return p.length === 3 ? p[2] + "/" + p[1] + "/" + p[0] : iso; }
+
+  var ultimoPdf = null;
+  function armarPdf() {
+    var doc = new window.jspdf.jsPDF({ unit: "mm", format: "a4" });
+    var W = 210, M = 18, y = 0;
+    var numero = "VT-" + v("fecha").replace(/-/g, "").slice(2) + "-" + String(Math.floor(Math.random() * 900) + 100);
+
+    doc.setFillColor(164, 81, 43); doc.rect(0, 0, W, 30, "F");
+    doc.setTextColor(251, 246, 238); doc.setFont("helvetica", "bold"); doc.setFontSize(16);
+    doc.text("Servicio Técnico Modelo", M, 14);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9);
+    doc.text("Empresa ficticia · documento de ejemplo", M, 21);
+    doc.setFontSize(10); doc.text("Informe N.º " + numero, W - M, 14, { align: "right" });
+    doc.text(fechaLarga(v("fecha")), W - M, 21, { align: "right" });
+
+    y = 44; doc.setTextColor(38, 34, 29);
+    doc.setFont("helvetica", "bold"); doc.setFontSize(15); doc.text("Informe de visita técnica", M, y);
+    y += 10; doc.setFontSize(10);
+    [["Cliente", v("cliente")], ["Dirección", v("direccion")], ["Técnico", v("tecnico")]].forEach(function (f) {
+      doc.setFont("helvetica", "bold"); doc.text(f[0] + ":", M, y);
+      doc.setFont("helvetica", "normal"); doc.text(f[1] || "-", M + 24, y); y += 6;
+    });
+
+    var res = PUNTOS.map(function (p, i) { return { p: p, e: document.querySelector('input[name="p' + i + '"]:checked').value, c: v("c" + i) }; });
+    var nObs = res.filter(function (r) { return r.e === "Observación"; }).length, nFal = res.filter(function (r) { return r.e === "Falla"; }).length;
+    var resumen = (nObs || nFal) ? [nObs ? nObs + (nObs === 1 ? " observación" : " observaciones") : "", nFal ? nFal + (nFal === 1 ? " falla" : " fallas") : ""].filter(Boolean).join(" y ") : "Todo en orden";
+    y += 4; doc.setFillColor(243, 239, 231); doc.roundedRect(M, y, W - 2 * M, 12, 2, 2, "F");
+    doc.setFont("helvetica", "bold"); doc.text("Resumen: " + resumen + ".", M + 5, y + 7.8);
+    y += 22;
+
+    doc.setFontSize(9); doc.setTextColor(139, 131, 120);
+    doc.text("PUNTO REVISADO", M, y); doc.text("ESTADO", 120, y); doc.text("COMENTARIO", 150, y);
+    y += 3; doc.setDrawColor(224, 217, 204); doc.line(M, y, W - M, y); y += 6;
+    doc.setFontSize(10);
+    var COLORES = { "Bien": [107, 106, 58], "Observación": [154, 106, 18], "Falla": [163, 54, 43] };
+    res.forEach(function (r) {
+      var lineas = doc.splitTextToSize(r.c || "-", W - M - 150);
+      doc.setTextColor(38, 34, 29); doc.setFont("helvetica", "normal"); doc.text(r.p, M, y);
+      doc.setTextColor.apply(doc, COLORES[r.e]); doc.setFont("helvetica", "bold"); doc.text(r.e, 120, y);
+      doc.setTextColor(92, 85, 75); doc.setFont("helvetica", "normal"); doc.text(lineas, 150, y);
+      y += Math.max(1, lineas.length) * 5 + 5; doc.line(M, y - 4.5, W - M, y - 4.5);
+    });
+
+    if (fotos.length) {
+      y += 6; doc.setTextColor(38, 34, 29); doc.setFont("helvetica", "bold"); doc.text("Fotos", M, y); y += 4;
+      var lado = (W - 2 * M - 3 * 4) / 4;
+      if (y + lado > 250) { doc.addPage(); y = 20; }
+      fotos.forEach(function (f, i) {
+        var k = Math.min(lado / f.w, lado / f.h), w = f.w * k, h = f.h * k;
+        doc.addImage(f.data, "JPEG", M + i * (lado + 4) + (lado - w) / 2, y + (lado - h) / 2, w, h);
+      });
+      y += lado + 6;
+    }
+
+    if (y > 240) { doc.addPage(); y = 20; }
+    y += 6; doc.setTextColor(38, 34, 29); doc.setFont("helvetica", "bold"); doc.text("Conformidad", M, y); y += 3;
+    if (hayFirma) {
+      var blanco = document.createElement("canvas"); blanco.width = cv.width; blanco.height = cv.height;
+      var b = blanco.getContext("2d"); b.fillStyle = "#fff"; b.fillRect(0, 0, blanco.width, blanco.height); b.drawImage(cv, 0, 0);
+      doc.addImage(blanco.toDataURL("image/jpeg", .85), "JPEG", M, y, 60, 60 * cv.height / cv.width);
+    }
+    y += 60 * cv.height / cv.width + 2; doc.setDrawColor(139, 131, 120); doc.line(M, y, M + 60, y);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9); doc.text(v("firmante") || "Aclaración", M, y + 5);
+
+    doc.setFontSize(8); doc.setTextColor(139, 131, 120);
+    doc.text("Documento de ejemplo generado en marianolfb.github.io · Mundano, por Mariano Burnengo", W / 2, 287, { align: "center" });
+    return { doc: doc, nombre: "informe-" + numero + ".pdf" };
+  }
+
+  document.getElementById("generar").addEventListener("click", function () {
+    if (!window.jspdf) { document.getElementById("estadoPdf").textContent = "No se pudo cargar el generador de PDF. Revisá la conexión y probá de nuevo."; return; }
+    ultimoPdf = armarPdf();
+    ultimoPdf.doc.save(ultimoPdf.nombre);
+    document.getElementById("estadoPdf").textContent = "Listo: se descargó " + ultimoPdf.nombre + ".";
+    var archivo = new File([ultimoPdf.doc.output("blob")], ultimoPdf.nombre, { type: "application/pdf" });
+    document.getElementById("compartir").hidden = !(navigator.canShare && navigator.canShare({ files: [archivo] }));
+    ultimoPdf.archivo = archivo;
+  });
+  document.getElementById("compartir").addEventListener("click", function () {
+    if (ultimoPdf && ultimoPdf.archivo) navigator.share({ files: [ultimoPdf.archivo], title: "Informe de visita" }).catch(function () {});
+  });
+</script>
+</body>
+</html>

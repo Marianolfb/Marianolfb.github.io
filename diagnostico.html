@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico · Mundano</title>
+<meta name="description" content="Cinco preguntas para ver qué conviene automatizar en tu negocio y cuántas horas por mes se van hoy en eso.">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<meta name="theme-color" content="#f3efe7">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<header class="cabeza" id="cabeza"></header>
+
+<main>
+  <section class="wrap angosto portada chica">
+    <p class="etiqueta">Diagnóstico</p>
+    <h1 class="serif">¿Qué conviene automatizar en tu negocio?</h1>
+    <p class="bajada">Cinco preguntas, todas de tocar. Funciona en tu navegador: no se guarda ni se envía nada.</p>
+  </section>
+
+  <section class="wrap angosto" style="padding-bottom:88px">
+    <form class="panel" id="form" onsubmit="return false">
+      <fieldset class="pregunta">
+        <legend><span class="num">1.</span>¿Qué querés resolver?</legend>
+        <div class="opciones" data-nombre="que">
+          <label class="opcion"><input type="radio" name="que" value="web"><span>Tener una página web</span></label>
+          <label class="opcion"><input type="radio" name="que" value="restaurante"><span>Mesas y pedidos de un restaurante</span></label>
+          <label class="opcion"><input type="radio" name="que" value="turnos"><span>Turnos y reservas</span></label>
+          <label class="opcion"><input type="radio" name="que" value="ventas"><span>Pedidos y ventas</span></label>
+          <label class="opcion"><input type="radio" name="que" value="stock"><span>Stock</span></label>
+          <label class="opcion"><input type="radio" name="que" value="calle"><span>Trabajo en la calle</span></label>
+          <label class="opcion"><input type="radio" name="que" value="cobranzas"><span>Cobranzas y cuentas</span></label>
+          <label class="opcion"><input type="radio" name="que" value="otra"><span>Otra cosa</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="pregunta">
+        <legend><span class="num">2.</span>¿Dónde se anota hoy?</legend>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="donde" value="papel"><span>En papel</span></label>
+          <label class="opcion"><input type="radio" name="donde" value="excel"><span>En planillas de Excel</span></label>
+          <label class="opcion"><input type="radio" name="donde" value="whatsapp"><span>En WhatsApp</span></label>
+          <label class="opcion"><input type="radio" name="donde" value="sistema"><span>En un sistema que no se adapta</span></label>
+          <label class="opcion"><input type="radio" name="donde" value="nada"><span>En ningún lado</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="pregunta">
+        <legend><span class="num">3.</span>¿Cuántas personas participan?</legend>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="personas" value="1"><span>Sólo yo</span></label>
+          <label class="opcion"><input type="radio" name="personas" value="2"><span>De 2 a 5</span></label>
+          <label class="opcion"><input type="radio" name="personas" value="6"><span>Más de 5</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="pregunta">
+        <legend><span class="num">4.</span>¿Algún dato se carga dos veces?</legend>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="doble" value="si"><span>Sí</span></label>
+          <label class="opcion"><input type="radio" name="doble" value="no"><span>No</span></label>
+          <label class="opcion"><input type="radio" name="doble" value="nose"><span>No sé</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="pregunta" style="margin-bottom:0">
+        <legend><span class="num">5.</span>¿Cuántas horas por semana se le dedican?</legend>
+        <div class="opciones">
+          <label class="opcion"><input type="radio" name="horas" value="1.5"><span>Menos de 2</span></label>
+          <label class="opcion"><input type="radio" name="horas" value="3.5"><span>De 2 a 5</span></label>
+          <label class="opcion"><input type="radio" name="horas" value="7.5"><span>De 5 a 10</span></label>
+          <label class="opcion"><input type="radio" name="horas" value="12"><span>Más de 10</span></label>
+        </div>
+      </fieldset>
+
+      <p class="aviso" id="falta">Respondé las cinco preguntas para ver el resultado.</p>
+
+      <div class="resultado" id="resultado" hidden aria-live="polite">
+        <p class="etiqueta">Tu resultado</p>
+        <p class="grande" id="horasMes"></p>
+        <p class="intro" id="horasTexto" style="margin-top:8px"></p>
+        <h2 class="serif" style="font-size:1.5rem;margin-top:28px">Lo que te recomendaría</h2>
+        <ul class="recos" id="recos"></ul>
+        <p class="intro" id="tipoTexto" style="margin-top:22px"></p>
+        <div class="acciones" style="margin-top:22px">
+          <a class="btn" id="irPresupuesto" href="presupuesto.html">Armar borrador de presupuesto</a>
+          <button type="button" class="btn suave" id="consultar">Consultar por WhatsApp</button>
+        </div>
+      </div>
+    </form>
+  </section>
+</main>
+
+<footer class="pie" id="pie"></footer>
+<script src="comun.js"></script>
+<script>
+  var form = document.getElementById("form");
+  var NOMBRES = {
+    que: { restaurante: "mesas y pedidos de un restaurante", turnos: "turnos y reservas", ventas: "pedidos y ventas", stock: "stock", calle: "trabajo en la calle", cobranzas: "cobranzas y cuentas", web: "tener una página web", otra: "otra cosa" },
+    donde: { papel: "en papel", excel: "en planillas de Excel", whatsapp: "en WhatsApp", sistema: "en un sistema que no se adapta", nada: "en ningún lado" },
+    personas: { "1": "sólo yo", "2": "de 2 a 5 personas", "6": "más de 5 personas" },
+    horas: { "1.5": "menos de 2 horas por semana", "3.5": "de 2 a 5 horas por semana", "7.5": "de 5 a 10 horas por semana", "12": "más de 10 horas por semana" }
+  };
+  var POR_TEMA = {
+    restaurante: ["Mesas y pedidos en una tablet o celular", "Cada mesa abierta a la vista, el pedido llega directo a la cocina y al cerrar la mesa sale la cuenta. La caja del día se arma sola."],
+    turnos: ["Agenda en línea con recordatorios", "Los clientes reservan desde el celular, cada profesional ve su agenda y los recordatorios salen solos, lo que baja las ausencias."],
+    ventas: ["Un solo lugar para los pedidos", "Cada pedido queda registrado con su estado (pedido, preparado, entregado, cobrado) y se ve quién lo tomó."],
+    stock: ["Stock que se descuenta solo", "Cada venta o salida descuenta la mercadería y la herramienta avisa cuando algo se está por terminar."],
+    calle: ["Una app que funcione sin señal", "El recorrido del día y los informes en el celular, con fotos y firma. Se sincroniza cuando vuelve la conexión."],
+    cobranzas: ["Cuentas claras por cliente", "Cuánto debe cada uno, desde cuándo, y avisos de vencimiento. A fin de mes, el resumen sale solo."],
+    web: ["Una página propia", "Si sólo necesitás estar en internet, alcanza con una página bien simple. Si querés vender o mostrar mucho contenido, un sitio más completo."],
+    otra: ["Empezar por la tarea que más tiempo lleva", "Con una charla corta vemos cuál conviene resolver primero."]
+  };
+  var POR_LUGAR = {
+    papel: ["Del papel al celular", "Se anota en el momento, desde el celular. Nada se pierde y no hay que pasarlo en limpio."],
+    excel: ["Tu planilla no se pierde", "La herramienta puede tomar lo que ya tenés y exportar en el mismo formato de Excel."],
+    whatsapp: ["Que nada se pierda en el chat", "Lo que hoy llega por WhatsApp queda registrado, ordenado y con su estado."],
+    sistema: ["Complementar antes de cambiar todo", "A veces alcanza con una herramienta que se ocupe justo de lo que tu sistema no resuelve."],
+    nada: ["Empezar a registrar", "Lo primero es tener los datos en un lugar. Con eso ya se pueden ver números que hoy no ves."]
+  };
+
+  function valor(n) { var el = form.querySelector('input[name="' + n + '"]:checked'); return el ? el.value : null; }
+  function tipoSugerido(r) {
+    if (r.que === "web") return "pagina";
+    if (r.personas === "6" || (r.personas === "2" && r.doble === "si")) return "sistema";
+    return "herramienta";
+  }
+  var TIPOS = { pagina: "una página web", herramienta: "una herramienta para un proceso", sistema: "un sistema de gestión" };
+
+  function actualizar() {
+    var r = { que: valor("que"), donde: valor("donde"), personas: valor("personas"), doble: valor("doble"), horas: valor("horas") };
+    var completo = r.que && r.donde && r.personas && r.doble && r.horas;
+    document.getElementById("falta").hidden = !!completo;
+    var res = document.getElementById("resultado");
+    if (!completo) { res.hidden = true; return; }
+    var primera = res.hidden;
+    res.hidden = false;
+
+    var mes = Math.round(parseFloat(r.horas) * 4.3);
+    document.getElementById("horasMes").textContent = "Unas " + mes + " horas por mes";
+    document.getElementById("horasTexto").textContent = r.que === "web"
+      ? "Es el tiempo que hoy dedicás a responder consultas que una página podría contestar sola."
+      : "Es lo que hoy se va en " + NOMBRES.que[r.que] + ". Buena parte de ese tiempo es cargar, copiar y buscar datos, y eso es lo que se automatiza.";
+
+    var recos = [POR_TEMA[r.que]];
+    if (r.que !== "web") recos.push(POR_LUGAR[r.donde]);
+    if (r.doble === "si" && r.que !== "web") recos.push(["Cada dato, una sola vez", "Se carga una vez y el resto (informes, planillas, avisos) sale de ahí."]);
+    else if (r.personas !== "1" && r.que !== "web") recos.push(["Un usuario para cada persona", "Cada uno ve y carga sólo lo que le toca, y queda registrado quién hizo qué."]);
+    document.getElementById("recos").innerHTML = recos.slice(0, 3).map(function (x) { return "<li><b>" + x[0] + "</b>" + x[1] + "</li>"; }).join("");
+
+    var tipo = tipoSugerido(r);
+    document.getElementById("tipoTexto").textContent = "Por lo que contás, lo tuyo se resuelve con " + TIPOS[tipo] + ".";
+    document.getElementById("irPresupuesto").href = "presupuesto.html#tipo=" + tipo + "&tema=" + r.que;
+    if (primera) res.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  form.addEventListener("change", actualizar);
+
+  document.getElementById("consultar").addEventListener("click", function () {
+    var r = { que: valor("que"), donde: valor("donde"), personas: valor("personas"), doble: valor("doble"), horas: valor("horas") };
+    abrirWhatsApp("Hola Mariano, hice el diagnóstico en tu página.\n" +
+      "Quiero resolver: " + NOMBRES.que[r.que] + ".\n" +
+      "Hoy se anota " + NOMBRES.donde[r.donde] + ".\n" +
+      "Participan: " + NOMBRES.personas[r.personas] + ".\n" +
+      "¿Datos cargados dos veces?: " + ({ si: "sí", no: "no", nose: "no sé" })[r.doble] + ".\n" +
+      "Le dedicamos " + NOMBRES.horas[r.horas] + ".");
+  });
+</script>
+</body>
+</html>

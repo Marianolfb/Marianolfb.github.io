@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demos · Mundano</title>
+<meta name="description" content="Demos para probar, con datos ficticios: inspecciones en campo, gastos compartidos y venta de entradas.">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<meta name="theme-color" content="#f3efe7">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<header class="cabeza" id="cabeza"></header>
+
+<main>
+  <section class="wrap portada chica">
+    <p class="etiqueta">Demos</p>
+    <h1 class="serif">Probalas vos.</h1>
+    <p class="bajada">Copias de trabajos reales con datos ficticios. Podés tocar todo: no hay clientes reales detrás.</p>
+  </section>
+
+  <section class="wrap" style="padding-bottom:72px">
+    <article class="demo">
+      <div class="vista">
+        <img src="img/inspecciones-1-recorrido.webp" width="390" height="844" alt="Pantalla Recorrido: lista de edificios por zona con estado de visita">
+        <img src="img/inspecciones-2-liquidacion.webp" width="390" height="844" alt="Pantalla Liquidación: totales del mes">
+      </div>
+      <div>
+        <h3 class="serif">Inspecciones en campo</h3>
+        <p>Recorrido del día, ficha de cada equipo, informe del mes y liquidación en Excel. Funciona sin señal.</p>
+        <div class="acciones"><a class="btn" href="https://plomada-demo-cyan.vercel.app" target="_blank" rel="noopener">Probar la demo</a><a class="btn suave" href="tutoriales/tutorial-inspecciones.html" target="_blank" rel="noopener">Ver cómo funciona</a></div>
+      </div>
+    </article>
+    <article class="demo">
+      <div class="vista">
+        <img src="img/ticketera-2-evento.webp" width="390" height="844" alt="Página de un evento con los tipos de entrada">
+        <img src="img/ticketera-6-entrada.webp" width="390" height="844" alt="Entrada con código QR">
+      </div>
+      <div>
+        <h3 class="serif">Venta de entradas</h3>
+        <p>Página del evento, compra con pago simulado, entrada con QR y control en la puerta.</p>
+        <div class="acciones"><a class="btn" href="https://ticketera-demo-three.vercel.app" target="_blank" rel="noopener">Probar la demo</a><a class="btn suave" href="tutoriales/tutorial-ticketera.html" target="_blank" rel="noopener">Ver cómo funciona</a></div>
+      </div>
+    </article>
+    <article class="demo">
+      <div class="vista">
+        <img src="img/gastos-1-cargar.webp" width="390" height="844" alt="Pantalla Cargar gasto">
+        <img src="img/gastos-2-mes.webp" width="390" height="844" alt="Pantalla Mes: balance y gráfico por categoría">
+      </div>
+      <div>
+        <h3 class="serif">Gastos compartidos</h3>
+        <p>Cargás un gasto en segundos, se divide solo y cada uno ve su saldo del mes.</p>
+        <div class="acciones"><a class="btn" href="https://gastos-demo.vercel.app" target="_blank" rel="noopener">Probar la demo</a><a class="btn suave" href="tutoriales/tutorial-gastos-compartidos.html" target="_blank" rel="noopener">Ver cómo funciona</a></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="sec" style="border-top:1px solid var(--linea)">
+    <div class="wrap">
+      <p class="etiqueta">Herramientas</p>
+      <h2 class="serif">Y tres para usar ahora.</h2>
+      <div class="grilla">
+        <a class="tarjeta" href="diagnostico.html"><h3>Diagnóstico</h3><p>Cinco preguntas para ver qué conviene automatizar y cuántas horas por mes se van hoy.</p><span class="ir">Empezar →</span></a>
+        <a class="tarjeta" href="presupuesto.html"><h3>Borrador de presupuesto</h3><p>Marcás qué necesitás y te muestra un rango de precio y de plazo.</p><span class="ir">Armar borrador →</span></a>
+        <a class="tarjeta" href="informe.html"><h3>Informe de visita</h3><p>Completás, firmás con el dedo y sale el PDF.</p><span class="ir">Probar →</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie" id="pie"></footer>
+<script src="comun.js"></script>
+</body>
+</html>

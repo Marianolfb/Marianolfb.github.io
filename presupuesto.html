@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Borrador de presupuesto · Mundano</title>
+<meta name="description" content="Marcá qué necesitás y mirá un rango de precio y de plazo, en dólares.">
+<link rel="icon" href="icono.svg" type="image/svg+xml">
+<meta name="theme-color" content="#f3efe7">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<header class="cabeza" id="cabeza"></header>
+
+<main>
+  <section class="wrap angosto portada chica">
+    <p class="etiqueta">Borrador de presupuesto</p>
+    <h1 class="serif">¿Cuánto puede costar?</h1>
+    <p class="bajada">Marcá qué necesitás y vas a ver un rango de precio y de plazo. El precio final se cierra antes de empezar, cuando el alcance está claro.</p>
+  </section>
+
+  <section class="wrap angosto" style="padding-bottom:88px">
+    <form class="panel" id="form" onsubmit="return false">
+      <fieldset class="pregunta">
+        <legend><span class="num">1.</span>¿Qué necesitás?</legend>
+        <div class="opciones" id="tipos"></div>
+      </fieldset>
+
+      <fieldset class="pregunta" id="bloqueExtras" hidden>
+        <legend><span class="num">2.</span>¿Qué tiene que incluir?</legend>
+        <div class="opciones" id="extras"></div>
+      </fieldset>
+
+      <div class="resultado" id="resultado" hidden aria-live="polite">
+        <p class="etiqueta">Tu borrador</p>
+        <p class="grande" id="rango"></p>
+        <p class="intro" id="plazo" style="margin-top:8px"></p>
+        <p class="aviso" id="incluye"></p>
+        <p class="aviso">Para herramientas y sistemas en uso, el mantenimiento y el alojamiento van aparte: entre USD 30 y 100 por mes.</p>
+        <div class="acciones" style="margin-top:22px">
+          <button type="button" class="btn" id="enviar">Mandarme el borrador por WhatsApp</button>
+          <a class="btn suave" href="diagnostico.html">No sé qué necesito</a>
+        </div>
+      </div>
+    </form>
+  </section>
+</main>
+
+<footer class="pie" id="pie"></footer>
+<script src="comun.js"></script>
+<script>
+  var EXTRAS_APP = ["Funciona sin señal", "Varios usuarios, cada uno con su rol", "Cobros con Mercado Pago", "Exportar a Excel", "Importar los datos que ya tenés", "Avisos por mail o WhatsApp"];
+  var TIPOS = [
+    { id: "simple", nombre: "Página bien simple", detalle: "Una sola página para tener presencia en internet", desde: 80, plazo: "unos días", incluye: "Incluye dominio y alojamiento del primer año.", extras: [] },
+    { id: "pagina", nombre: "Página web informativa", detalle: "Hasta cinco secciones, con diseño propio", min: 300, max: 700, plazo: "2 a 3 semanas", extras: ["Formulario de contacto", "Galería de fotos", "Mapa y horarios", "Aparecer en Google con tu ficha"] },
+    { id: "sitio", nombre: "Sitio web con extras", detalle: "Idiomas, formularios, contenido desde una planilla", min: 700, max: 1500, plazo: "3 a 6 semanas", extras: ["Varios idiomas", "Contenido que se carga desde una planilla", "Cobros en línea", "Formularios que guardan las respuestas"] },
+    { id: "herramienta", nombre: "Herramienta para un proceso", detalle: "Una tarea puntual, pocos usuarios", min: 1200, max: 3000, plazo: "1 a 2 meses", extras: EXTRAS_APP },
+    { id: "sistema", nombre: "Sistema de gestión", detalle: "Varios roles, reportes, el día a día de la empresa", min: 3000, max: 7000, plazo: "2 a 4 meses", extras: EXTRAS_APP }
+  ];
+
+  var cajaTipos = document.getElementById("tipos");
+  cajaTipos.innerHTML = TIPOS.map(function (t) {
+    return '<label class="opcion bloque"><input type="radio" name="tipo" value="' + t.id + '"><span><b>' + t.nombre + '</b><small>' + t.detalle + '</small></span></label>';
+  }).join("");
+
+  function tipoActual() { var el = document.querySelector('input[name="tipo"]:checked'); return el ? TIPOS.filter(function (t) { return t.id === el.value; })[0] : null; }
+  function marcados() { return Array.prototype.map.call(document.querySelectorAll('#extras input:checked'), function (i) { return i.value; }); }
+  function redondear(n, paso) { return Math.round(n / paso) * paso; }
+
+  function calcular(t, n) {
+    if (t.desde) return { texto: "Desde " + usd(t.desde) };
+    var total = t.extras.length, frac = total ? n / total : 0, span = t.max - t.min;
+    var paso = t.max > 2000 ? 100 : 50;
+    var lo = redondear(t.min + span * frac * 0.5, paso);
+    var hi = redondear(t.min + span * (0.5 + frac * 0.5), paso);
+    return { texto: usd(lo) + " a " + usd(hi).replace("USD ", "") };
+  }
+
+  function mostrarExtras(t) {
+    var bloque = document.getElementById("bloqueExtras");
+    bloque.hidden = !t.extras.length;
+    document.getElementById("extras").innerHTML = t.extras.map(function (x) {
+      return '<label class="opcion"><input type="checkbox" value="' + x + '"><span>' + x + '</span></label>';
+    }).join("");
+  }
+
+  function actualizar() {
+    var t = tipoActual(), res = document.getElementById("resultado");
+    if (!t) { res.hidden = true; return; }
+    var r = calcular(t, marcados().length);
+    res.hidden = false;
+    document.getElementById("rango").textContent = r.texto;
+    document.getElementById("plazo").textContent = "Plazo estimado: " + t.plazo + ".";
+    document.getElementById("incluye").textContent = t.incluye || "";
+    document.getElementById("incluye").hidden = !t.incluye;
+  }
+
+  cajaTipos.addEventListener("change", function () { var t = tipoActual(); mostrarExtras(t); actualizar(); });
+  document.getElementById("extras").addEventListener("change", actualizar);
+
+  /* Si viene del diagnóstico: presupuesto.html#tipo=herramienta&tema=turnos */
+  var p = {}; location.hash.slice(1).split("&").forEach(function (kv) { var a = kv.split("="); if (a[0]) p[a[0]] = decodeURIComponent(a[1] || ""); });
+  var TEMAS = { restaurante: "mesas y pedidos de un restaurante", turnos: "turnos y reservas", ventas: "pedidos y ventas", stock: "stock", calle: "trabajo en la calle", cobranzas: "cobranzas y cuentas", web: "una página web", otra: "otra cosa" };
+  if (p.tipo) {
+    var el = cajaTipos.querySelector('input[value="' + p.tipo + '"]');
+    if (el) { el.checked = true; mostrarExtras(tipoActual()); actualizar(); }
+  }
+
+  document.getElementById("enviar").addEventListener("click", function () {
+    var t = tipoActual(), ex = marcados();
+    abrirWhatsApp("Hola Mariano, armé un borrador de presupuesto en tu página.\n" +
+      (p.tema && TEMAS[p.tema] ? "Quiero resolver: " + TEMAS[p.tema] + ".\n" : "") +
+      "Necesito: " + t.nombre.toLowerCase() + ".\n" +
+      (ex.length ? "Que incluya: " + ex.join(", ").toLowerCase() + ".\n" : "") +
+      "Rango que me dio: " + calcular(t, ex.length).texto + ".");
+  });
+</script>
+</body>
+</html>
