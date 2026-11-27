@@ -164,3 +164,9 @@ a.tarjeta:hover{border-color:var(--tierra)}
   .sec,.contacto{padding:64px 0}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+/* trabajos realizados */
+.caso p{font-size:.95rem;color:var(--tinta-suave)}
+.subtitulo{font-size:1.12rem;font-weight:600;margin-top:44px}
+.resuelto{list-style:none;padding:0;margin:16px 0 0;display:flex;flex-wrap:wrap;gap:10px}
+.resuelto li{background:var(--sel);border-radius:999px;padding:8px 14px;font-size:.92rem;line-height:1.3}
